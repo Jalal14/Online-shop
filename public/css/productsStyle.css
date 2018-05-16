@@ -1,0 +1,56 @@
+.body-section{
+	margin-left: 3%;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.details-body{
+	margin-top: 100px;
+}
+
+#details-body{
+	margin-bottom: 50px;
+}
+
+#content{
+	min-height: 250px;
+}
+
+.thumbnail{
+	height: 250px;
+	padding: 4px;
+	margin-bottom: 20px;
+	background-color: white;
+	border: 1px solid gray;
+	border-radius: 4px;
+}
+
+.thumbnail:hover{
+	border: 1px solid blue;
+}
+
+.thumbnail > img{
+	padding: 5px;
+    height: 100%;
+}
+
+.tab-content{
+	padding: 5px;
+	background-color: white;
+}
+
+#order{
+	background-color: white;
+	border: 1px solid gray;
+	border-radius: 4px;
+	padding-bottom: 10px;
+}
+
+#checkout-details{
+	border: 1px solid gray;
+	border-radius: 5px;
+	padding: 10px;
+}
+#checkout-details > tr{
+	padding: 5px;
+}

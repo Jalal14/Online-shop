@@ -11,6 +11,30 @@
 |
 */
 
+/* User section */
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('public.home');
 });
+
+Route::get('/best-sell', function () {
+    return view('products.product-list');
+});
+
+Route::get('/details', function () {
+    return view('products.product-details');
+});
+
+Route::get('/checkout', function () {
+    return view('users.checkout');
+});
+
+Route::get('/profile', function () {
+    return view('users.profile');
+});
+
+Route::get('/password', function () {
+    return view('users.update-password');
+});
+
+/* End user section */
