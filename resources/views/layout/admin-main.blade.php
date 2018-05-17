@@ -38,9 +38,8 @@
                     <li class="dropdown" id="account-dropdown">
                         <a href="#" data-toggle="dropdown">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="account-dropdown-menu">
-                            <li><a href="#">Your store</a></li>
                             <li><a href="#">Profile</a></li>
-                            <li><a href="#">Change password</a></li>
+                            <li><a href="#">Your store</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Logout</a></li>
@@ -77,8 +76,9 @@
                         <li><a href="/admin/delivered">Company</a></li>
                     </ul>
                     <li><a href="#">Employee</a></li>
-                    <li><a href="#">Buy history</a></li>
+                    <li><a href="#">Customers</a></li>
                     <li><a href="#">Report</a></li>
+                    <li><a href="#">Information</a></li>
                 </ul>
             </div>
         </div>

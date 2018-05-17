@@ -8,7 +8,7 @@
     <div class="container" id="profile-area">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="panel">
+                <div class="panel panel-default">
                     <div class="panel-heading"><h4>Update password</h4></div>
                     <div class="panel-body">
                         <form>

@@ -17,7 +17,7 @@
                         </ul>
                         <div class="tab-content profile-content">
                             <div id="account-dashboard" class="tab-pane fade in active">
-                                <div class="panel">
+                                <div class="panel panel-default">
                                     <div class="panel-heading"><h4>User information</h4></div>
                                     <div class="panel-body">
                                         <table>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div id="update-account" class="tab-pane fade">
-                                <div class="panel col-lg-8 col-md-8 col-sm-8">
+                                <div class="panel panel-default col-lg-8 col-md-8 col-sm-8">
                                     <div class="panel-heading"><h4>Update information</h4></div>
                                     <div class="panel-body">
                                         <form>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <div id="orders" class="tab-pane fade">
-                                <div class="panel">
+                                <div class="panel panel-default">
                                     <div class="panel-heading"><h4>Order history</h4></div>
                                     <div class="panel-body">
                                         <table class="table table-hover">

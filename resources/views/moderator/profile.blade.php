@@ -23,39 +23,47 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <form enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" value="Full name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" value="Email address" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Phone 1:</label>
-                            <input type="text" class="form-control" value="Contact 1" name="contact1">
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Phone 2:</label>
-                            <input type="text" class="form-control" value="Contact 2" name="contact2">
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Gender:</label>
-                            <label class="radio-inline"><input type="radio" name="gender">Male</label>
-                            <label class="radio-inline"><input type="radio" name="gender">Female</label>
-                            <label class="radio-inline"><input type="radio" name="gender">Other</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Date of birth:</label>
-                            <input type="text" class="form-control" name="dob" id="dob">
-                        </div>
-                        <div class="form-group">
-                            <label for="contact">Address:</label>
-                            <input type="text" class="form-control" value="Mobile number" name="contact">
-                        </div>
-                        <div class="form-group control-fileupload">
-                            <label for="photo">Photo:</label>
-                            <input type="file" class="form-control" name="photo">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <td>Name : </td>
+                                    <td><input type="text" class="form-control" value="Full name" name="name"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email : </td>
+                                    <td><input type="email" class="form-control" value="Email address" name="email"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone 1 : </td>
+                                    <td><input type="text" class="form-control" value="Contact 1" name="contact1"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone 2 : </td>
+                                    <td><input type="text" class="form-control" value="Contact 2" name="contact2"></td>
+                                </tr>
+                                <tr>
+                                    <td>Gender: </td>
+                                    <td>
+                                        <label class="radio-inline"><input type="radio" name="gender">Male </label> |
+                                        <label class="radio-inline"><input type="radio" name="gender">Female </label> |
+                                        <label class="radio-inline"><input type="radio" name="gender">Other </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date of birth : </td>
+                                    <td><input type="text" class="form-control" name="dob" id="dob"></td>
+                                </tr>
+                                <tr>
+                                    <td>Address : </td>
+                                    <td><input type="text" class="form-control" value="Mobile number" name="contact"></td>
+                                </tr>
+                                <tr>
+                                    <td>Photo : </td>
+                                    <td><input type="file" class="form-control" name="photo"></td>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="form-control btn btn-success" value="Update">

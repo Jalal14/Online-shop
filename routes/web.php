@@ -124,4 +124,34 @@ Route::get('/returns', function (){
     return view('information.returns');
 });
 
+Route::get('/order-details', function (){
+    return view('information.order-details');
+});
+
 /*End moderator section */
+
+/* Admin section */
+
+Route::get('/employee', function (){
+    return view('admin.employee.employee-list');
+});
+
+Route::get('/employee/create', function (){
+    return view('admin.employee.add-employee');
+});
+
+Route::get('/employee/id', function (){
+    return view('admin.employee.delete-employee');
+});
+
+Route::get('/employee/id/edit', function (){
+    return view('admin.employee.update-employee');
+});
+
+Route::get('/buy-history', function (){
+    return view('admin.buy-history');
+});
+
+Route::get('/report', function (){
+    return view('admin.report');
+});
