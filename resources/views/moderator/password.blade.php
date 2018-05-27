@@ -1,7 +1,7 @@
 @extends('layout.moderator-main')
 
 @section('title')
-    password
+    Admin - password
 @endsection
 
 @section('content')
@@ -14,7 +14,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <form>
+                    <form method="post">
+                        {{csrf_field()}}
                         <div class="form-group">
                             <label for="cPass">Current password:</label>
                             <input type="password" class="form-control" name="cPass">
@@ -31,6 +32,15 @@
                             <input type="submit" class="form-control btn btn-success" value="Update">
                         </div>
                     </form>
+
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <p class="error">* {{$error}}</p>
+                        @endforeach
+                    @endif
+                    @if(session('msg'))
+                        <span class="error">{{session('msg')}}</span>
+                    @endif
                 </div>
             </div>
         </div>

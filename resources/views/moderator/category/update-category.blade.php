@@ -1,7 +1,7 @@
 @extends('layout.moderator-main')
 
 @section('title')
-    categori list
+    Admin - update category
 @endsection
 
 @section('content')
@@ -18,13 +18,14 @@
                         <h3>Update category</h3>
                     </div>
                     <form method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="id">
+                        {{csrf_field()}}
+                        <input type="hidden" name="id" value="{{$category->id}}">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                 <tr>
                                     <td>Name: </td>
-                                    <td><input type="text" name="name" value="Laptop"></td>
+                                    <td><input type="text" name="name" value="{{$category->name}}"></td>
                                 </tr>
                                 </thead>
                             </table>
@@ -33,6 +34,11 @@
                             <input type="submit"  class="btn btn-primary btn-md pull-right" name="submit" value="Update">
                         </div>
                     </form>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <p class="error">* {{$error}}</p>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

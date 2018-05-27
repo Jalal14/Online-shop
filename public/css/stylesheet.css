@@ -203,3 +203,5 @@ text-decoration: none;
 .profile-content{ margin: 20px; }
 
 .panel-heading{ background-color: #f4f4f4; }
+
+.error{ color: red; }

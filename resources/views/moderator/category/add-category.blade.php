@@ -1,7 +1,7 @@
 @extends('layout.moderator-main')
 
 @section('title')
-    add product
+    Admin - add category
 @endsection
 
 @section('content')
@@ -17,7 +17,8 @@
                     <div class="heading">
                         <h3>Add category</h3>
                     </div>
-                    <form method="post"  enctype="multipart/form-data">
+                    <form method="post">
+                        {{csrf_field()}}
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -32,6 +33,11 @@
                             <input type="submit"   class="btn btn-primary btn-md pull-right" name="submit" value="Add">
                         </div>
                     </form>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <p class="error">* {{$error}}</p>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

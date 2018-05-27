@@ -6,6 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('css')}}/stylesheet.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Login</title>
@@ -22,7 +24,8 @@
                 </div>
             </div>
             <div class="panel-body">
-                <form>
+                <form method="post">
+                    {{csrf_field()}}
                     <div class="form-group">
                         <label for="username"> Username</label>
                         <div class="input-group">
@@ -42,6 +45,16 @@
                     </div>
                     <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
                 </form>
+                @if($errors->any())
+                    @foreach($errors->all() as $error)
+                        <p class="error">* {{$error}}</p>
+                    @endforeach
+                @endif
+                <div id="msg" class="error">
+                    @if(session('msg'))
+                        * {{session('msg')}}
+                    @endif
+                </div>
             </div>
             <div class="panel-footer">
                 <p><a href="#">Forgot Password?</a></p>

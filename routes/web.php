@@ -12,146 +12,77 @@
 */
 
 /* User section */
-
-Route::get('/', function () {
+Route::get('/', function (){
     return view('public.home');
 });
-
-Route::get('/best-sell', function () {
-    return view('products.product-list');
-});
-
-Route::get('/details', function () {
+Route::get('/user/details', function (){
     return view('products.product-details');
 });
 
-Route::get('/checkout', function () {
-    return view('users.checkout');
-});
-
-Route::get('/profile', function () {
-    return view('users.profile');
-});
-
-Route::get('/password', function () {
-    return view('users.update-password');
-});
-
 /* End user section */
-
-/*Moderator section */
-
-Route::get('/moderator/login', function (){
-    return view('moderator.login');
-});
-
-Route::get('/moderator', function (){
-    return view('moderator.home');
-});
-
-Route::get('/moderator/profile', function (){
-    return view('moderator.profile');
-});
-
-Route::get('/moderator/password', function (){
-    return view('moderator.password');
-});
-
-Route::get('/product', function (){
-    return view('moderator.product.product-list');
-});
-
-Route::get('/product/create', function (){
-    return view('moderator.product.add-product');
-});
-
-Route::get('/product/id', function (){
-    return view('moderator.product.delete-product');
-});
+/* Moderator section */
 
 
-Route::get('/product/id/edit', function (){
-    return view('moderator.product.update-product');
-});
+Route::get('/category', 'CategoryController@index')->name('category.index');
+Route::get('/category/create', 'CategoryController@create')->name('category.create');
+Route::post('/category/create', 'CategoryController@store');
+Route::get('/category/{id}/edit', 'CategoryController@edit')->name('category.edit');
+Route::post('/category/{id}/edit', 'CategoryController@update');
+
+Route::get('/company', 'CompanyController@index')->name('company.index');
+Route::get('/company/create', 'CompanyController@create')->name('company.create');
+Route::post('/company/create', 'CompanyController@store');
+Route::get('/company/{id}/edit', 'CompanyController@edit')->name('company.edit');
+Route::post('/company/{id}/edit', 'CompanyController@update');
+
+Route::get('/product', 'ProductController@index')->name('product.index');
+Route::get('/product/create', 'ProductController@create')->name('product.create');
+Route::post('/product/create', 'ProductController@store');
+Route::get('/product/{id}', 'ProductController@show')->name('product.show');
+Route::get('/product/{id}/edit', 'ProductController@edit')->name('product.edit');
+Route::post('/product/{id}/edit', 'ProductController@update');
+Route::get('/product/{id}/add-quantity', 'ProductController@addQuantity')->name('product.addQuantity');
+Route::post('/product/{id}/add-quantity', 'ProductController@storeQuantity');
+Route::get('/details/{id}', 'ProductController@deleteDetails')->name('product.deleteDetails');
+Route::post('/details/{id}', 'ProductController@destroyDetails');
+Route::get('/specification/{id}', 'ProductController@deleteSpecification')->name('product.deleteSpecification');
+Route::post('/specification/{id}', 'ProductController@destroySpecification');
+
+/* End moderator section */
+
+/* Admin section*/
+
+Route::get('/admin/login', 'LoginController@index')->name('admin.login');
+Route::post('/admin/login', 'LoginController@adminLogin');
+Route::get('/admin', "AdminController@index")->name('admin.index');
+Route::get('/admin/profile', "AdminController@profile")->name('admin.profile');
+Route::post('/admin/profile', "AdminController@updateProfile");
+Route::get('/admin/password', "AdminController@editPassword")->name('admin.password');
+Route::post('/admin/password', "AdminController@updatePassword");
+
+Route::get('/employee/create', "AdminController@create")->name('admin.create');
+Route::post('/employee/create', "AdminController@store");
+Route::get('/employee/{id}/edit', 'AdminController@edit')->name('admin.edit');
+Route::post('/employee/{id}/edit', 'AdminController@update');
+Route::get('/employee/{id}', 'AdminController@show')->name('admin.show');
+Route::get('/employee', 'AdminController@all')->name('admin.all');
 
 
-Route::get('/category', function (){
-    return view('moderator.category.category-list');
-});
+Route::get('/status', 'StatusController@index')->name('status.index');
+Route::get('/status/create', 'StatusController@create')->name('status.create');
+Route::post('/status/create', 'StatusController@store');
+Route::get('/status/{id}/edit', 'StatusController@edit')->name('status.edit');
+Route::post('/status/{id}/edit', 'StatusController@update');
+Route::get('/status/{id}', 'StatusController@show')->name('status.show');
 
-Route::get('/category/create', function (){
-    return view('moderator.category.add-category');
-});
+Route::get('/orders', 'InformationController@orders')->name('information.orders');
+Route::get('/process', 'InformationController@process')->name('information.process');
+Route::get('/delivered', 'InformationController@delivered')->name('information.delivered');
+Route::get('/returns', 'InformationController@returns')->name('information.returns');
+Route::get('/buy-history', 'InformationController@buyHistory')->name('information.buyHistory');
+Route::get('/buy-history/{id}/edit', 'InformationController@editBuyHistory')->name('information.editBuyHistory');
+Route::post('/buy-history/{id}/edit', 'InformationController@updateBuyHistory');
 
-Route::get('/category/id/edit', function (){
-    return view('moderator.category.update-category');
-});
+Route::get('/admin/logout', 'LogoutController@adminLogout')->name('logout.admin');
 
-Route::get('/category/id', function (){
-    return view('moderator.category.delete-category');
-});
-
-
-Route::get('/company', function (){
-    return view('moderator.company.company-list');
-});
-
-Route::get('/company/create', function (){
-    return view('moderator.company.add-company');
-});
-
-Route::get('/company/id/edit', function (){
-    return view('moderator.company.update-company');
-});
-
-Route::get('/company/id', function (){
-    return view('moderator.company.delete-company');
-});
-
-Route::get('/delivered', function (){
-    return view('information.sales.delivered');
-});
-
-Route::get('/orders', function (){
-    return view('information.orders');
-});
-
-Route::get('/process', function (){
-    return view('information.process');
-});
-
-Route::get('/returns', function (){
-    return view('information.returns');
-});
-
-Route::get('/order-details', function (){
-    return view('information.order-details');
-});
-
-/*End moderator section */
-
-/* Admin section */
-
-Route::get('/employee', function (){
-    return view('admin.employee.employee-list');
-});
-
-Route::get('/employee/create', function (){
-    return view('admin.employee.add-employee');
-});
-
-Route::get('/employee/id', function (){
-    return view('admin.employee.delete-employee');
-});
-
-Route::get('/employee/id/edit', function (){
-    return view('admin.employee.update-employee');
-});
-
-Route::get('/buy-history', function (){
-    return view('admin.buy-history');
-});
-
-Route::get('/report', function (){
-    return view('admin.report');
-});
+/* End admin section */

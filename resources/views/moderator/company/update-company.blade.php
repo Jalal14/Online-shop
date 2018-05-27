@@ -1,7 +1,7 @@
 @extends('layout.moderator-main')
 
 @section('title')
-    category list
+    Admin - update company
 @endsection
 
 @section('content')
@@ -18,20 +18,22 @@
                         <h3>Update company</h3>
                     </div>
                     <form method="post" enctype="multipart/form-data">
+                        {{csrf_field()}}
+                        <input type="hidden" name="id" value="{{$company->id}}">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                 <tr>
                                     <td>Name: </td>
-                                    <td><input type="text" name="com_name" value="Apple"></td>
+                                    <td><input type="text" name="name" value="{{$company->name}}"></td>
                                 </tr>
                                 <tr>
                                     <td>Logo: </td>
-                                    <td><img src="{{asset('images')}}/company/apple-logo.png" class="image-content"></td>
+                                    <td><img src="{{asset('images')}}/{{$company->logo}}" class="image-content"></td>
                                 </tr>
                                 <tr>
                                     <td>Image: </td>
-                                    <td><input type="file" name="image"></td>
+                                    <td><input type="file" name="logo"></td>
                                 </tr>
                                 </thead>
                             </table>
@@ -40,6 +42,11 @@
                             <input type="submit"  class="btn btn-primary btn-md pull-right" name="submit" value="UPDATE">
                         </div>
                     </form>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <p class="error">* {{$error}}</p>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

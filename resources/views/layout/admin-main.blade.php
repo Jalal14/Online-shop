@@ -75,7 +75,7 @@
                         <li><a href="/admin/process">Category</a></li>
                         <li><a href="/admin/delivered">Company</a></li>
                     </ul>
-                    <li><a href="#">Employee</a></li>
+                    <li><a href="{{route('admin.all')}}">Employee</a></li>
                     <li><a href="#">Customers</a></li>
                     <li><a href="#">Report</a></li>
                     <li><a href="#">Information</a></li>

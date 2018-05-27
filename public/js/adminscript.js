@@ -36,4 +36,8 @@ $(document).ready(function() {
             changeYear: true
         });
     });
+    $('#file-upload').change(function (event) {
+        var output = document.getElementById('admin-photo');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    });
 });

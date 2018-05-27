@@ -1,7 +1,7 @@
 @extends('layout.moderator-main')
 
 @section('title')
-    remove employee
+    Admin - update employee
 @endsection
 
 @section('content')
@@ -15,46 +15,66 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6" id="product-table">
                     <div class="heading">
-                        <h3>Remove employee</h3>
+                        <h3>Update employee</h3>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <td>Username: </td>
-                                <td><label>admin</label></td>
-                            </tr>
-                            <tr>
-                                <td>Name: </td>
-                                <td>Alex</td>
-                            </tr>
-                            <tr>
-                                <td>Email: </td>
-                                <td>example@ecommerce.com</td>
-                            </tr>
-                            <tr>
-                                <td>Contact: </td>
-                                <td>231354654654</td>
-                            </tr>
-                            <tr>
-                                <td>Role: </td>
-                                <td>Admin</td>
-                            </tr>
-                            <tr>
-                                <td>Action</td>
-                                <td>
-                                    <select class="form-control">
-                                        <option>Enable</option>
-                                        <option>Disable</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <input type="submit" class="btn btn-danger btn-md pull-right" value="Remove">
-                    </div>
+                    <form method="post">
+                        {{csrf_field()}}
+                        <input type="hidden" value="{{$admin->id}}">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <td>Username: </td>
+                                    <td><label>{{$admin->uname}}</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Name: </td>
+                                    <td><label>{{$admin->name}}</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Email: </td>
+                                    <td><label>{{$admin->email}}</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Contact: </td>
+                                    <td><label>{{$admin->phone1}}</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Role: </td>
+                                    <td>
+                                        <select name="role" class="form-control">
+                                            @if($admin->role == 'Admin')
+                                                <option value="Admin" selected>Admin</option>
+                                                <option value="Moderator">Moderator</option>
+                                            @else
+                                                <option value="Moderator" selected>Moderator</option>
+                                                <option value="Admin">Admin</option>
+                                            @endif
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Action</td>
+                                    <td>
+                                        <select class="form-control" name="status">
+                                            @forelse($statusList as $status)
+                                                @if($status->id == $admin->status)
+                                                    <option value="{{$status->id}}" selected>{{$status->name}}</option>
+                                                @else
+                                                    <option value="{{$status->id}}">{{$status->name}}</option>
+                                                @endif
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </td>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <input type="submit" class="btn btn-warning btn-md pull-right" value="Update">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

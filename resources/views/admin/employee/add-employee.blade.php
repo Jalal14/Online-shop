@@ -23,10 +23,11 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12" id="product-table">
                     <form method="post" enctype="multipart/form-data">
+                        {{csrf_field()}}
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-10">
                                 <div class="heading">
-                                    <h3>Product info</h3>
+                                    <h3>Employee info</h3>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table">
@@ -62,9 +63,10 @@
                                         <tr>
                                             <td>Gender: </td>
                                             <td>
-                                                <label class="radio-inline"><input type="radio" name="gender">Male </label> |
-                                                <label class="radio-inline"><input type="radio" name="gender">Female </label> |
-                                                <label class="radio-inline"><input type="radio" name="gender">Other </label>
+                                                @forelse($genderList as $gender)
+                                                    <label class="radio-inline"><input type="radio" name="gender" value="{{$gender->id}}">{{$gender->name}} </label> |
+                                                @empty
+                                                @endforelse
                                             </td>
                                         </tr>
                                         <tr>
@@ -76,15 +78,26 @@
                                             <td><input type="text" class="form-control" name="address"></td>
                                         </tr>
                                         <tr>
+                                            <td>Status: </td>
+                                            <td>
+                                                <select class="form-control" name="status">
+                                                    @forelse($statusList as $status)
+                                                        <option value="{{$status->id}}">{{$status->name}}</option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Photo</td>
-                                            <td><input type="file" class="form-control" name="photo"></td>
+                                            <td><input type="file" class="form-control" id="file-upload" name="photo"></td>
                                         </tr>
                                         <tr>
                                             <td>Role: </td>
                                             <td>
                                                 <select class="form-control" name="role">
-                                                    <option>Moderator</option>
-                                                    <option>Admin</option>
+                                                    <option value="Moderator">Moderator</option>
+                                                    <option value="Admin">Admin</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -93,10 +106,21 @@
                                 </div>
                                 <input type="submit"  class="btn btn-primary btn-block" name="submit" value="ADD">
                             </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="heading">
+                                    <h3>Photo</h3>
+                                </div>
+                                <img class="img-thumbnail img-responsive" id="admin-photo">
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    <p class="error">* {{$error}}</p>
+                @endforeach
+            @endif
         </div>
     </div>
 @endsection

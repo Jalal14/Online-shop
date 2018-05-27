@@ -1,7 +1,7 @@
 @extends('layout.moderator-main')
 
 @section('title')
-    product list
+    Admin - product list
 @endsection
 
 @section('js')
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-lg-9 col-md-9 col-sm-9" id="product-table">
                     <div class="row">
-                        <a href="/admin/add-product"><button type="button" class="btn btn-primary btn-md pull-right">ADD NEW</button></a>
+                        <a href="{{route('product.create')}}"><button type="button" class="btn btn-primary btn-md pull-right">ADD NEW</button></a>
                     </div>
                     <div class="heading">
                         <h3>Product list</h3>
@@ -28,35 +28,38 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th>Id</th>
                                 <th>Image</th>
-                                <th>Name</th>
+                                <th>Name (Update)</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
+                                <th>Discount</th>
+                                <th>Available</th>
+                                <th>Sold</th>
                                 <th>Category</th>
+                                <th>Company</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td><img src="{{asset('images')}}/products/imac.png" class="image-content" alt="iMAC"></td>
-                                <td>iMAC</td>
-                                <td>380000</td>
-                                <td>50</td>
-                                <td>Desktop</td>
-                                <td>Apple</td>
-                                <td><a href="/admin/update-product">Update</a> | <a href="/admin/delete-product">Delete</a></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td><img src="{{asset('images')}}/products/imac.png" class="image-content" alt="iMAC"></td>
-                                <td>iMAC</td>
-                                <td>380000</td>
-                                <td>50</td>
-                                <td>Desktop</td>
-                                <td>Apple</td>
-                                <td><a href="/admin/update-product">Update</a> | <a href="/admin/delete-product">Delete</a></td>
-                            </tr>
+                            @forelse($productList as $product)
+                                <tr>
+                                    <td>{{$product->id}}</td>
+                                    <td><img src="{{asset('images')}}/{{$product->image}}" class="image-content" alt="{{$product->name}}"></td>
+                                    <td><label><a href="{{route('product.show', [$product->id])}}">{{$product->name}}</a></label></td>
+                                    <td>{{$product->sell_price}}</td>
+                                    <td>{{$product->discount}}%</td>
+                                    <td>{{$product->available}}</td>
+                                    <td>{{$product->sold}}</td>
+                                    <td>{{$product->category_name}}</td>
+                                    <td>{{$product->company_name}}</td>
+                                    <td>{{$product->status_name}}</td>
+                                    <td><a href="{{route('product.addQuantity', [$product->id])}}">Add quantity</a> | <a href="{{route('product.edit', [$product->id])}}">Update</a>
+                                        @if(session()->has('loggedAdmin'))
+                                            <br><a href="#">Delete</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
                             </thead>
                         </table>
                     </div>
@@ -92,45 +95,42 @@
                                 <td class="heading"><h3>Category</h3></td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox" id="select_all_categories"> All categories</td>
+                                <td>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="select_all_categories" checked> All categories
+                                    </label>
+                                </td>
                             </tr>
-                            <tr>
-                                <td><input class="categories_checkbox" type="checkbox" name="categories[]"> Laptop</td>
-                            </tr>
-                            <tr>
-                                <td><input class="categories_checkbox" type="checkbox" name="categories[]"> Desktop</td>
-                            </tr>
-                            <tr>
-                                <td><input class="categories_checkbox" type="checkbox" name="categories[]"> Mobile</td>
-                            </tr>
-                            <tr>
-                                <td><input class="categories_checkbox" type="checkbox" name="categories[]"> Tablets</td>
-                            </tr>
-                            <tr>
-                                <td><input class="categories_checkbox" type="checkbox" name="categories[]"> Camera</td>
-                            </tr>
+                            @forelse($categoryList as $category)
+                                <tr>
+                                    <td>
+                                        <label class="checkbox-inline">
+                                            <input class="categories_checkbox" type="checkbox" name="categories[]" value="{{$category->id}}" checked> {{$category->name}}
+                                        </label>
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
                             <tr>
                                 <td class="heading"><h3>Company</h3></td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox" id="select_all_companies"> All companies</td>
+                                <td>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="select_all_companies" checked> All companies
+                                    </label>
+                                </td>
                             </tr>
-                            <tr>
-                                <td><input class="companies_checkbox" type="checkbox" name="companies[]"> Apple</td>
-                            </tr>
-                            <tr>
-                                <td><input class="companies_checkbox" type="checkbox" name="companies[]"> Huawei</td>
-                            </tr>
-                            <tr>
-                                <td><input class="companies_checkbox" type="checkbox" name="companies[]"> Sony</td>
-                            </tr>
-                            <tr>
-                                <td><input class="companies_checkbox" type="checkbox" name="companies[]"> Samsung</td>
-                            </tr>
-                            <tr>
-                                <td><input class="companies_checkbox" type="checkbox" name="companies[]"> HP</td>
-                            </tr>
-
+                            @forelse($companyList as $company)
+                                <tr>
+                                    <td>
+                                        <label class="checkbox-inline">
+                                            <input class="companies_checkbox" type="checkbox" name="companies[]" value="{{$company->id}}" checked> {{$company->name}}
+                                        </label>
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
                             <tr>
                                 <td></td>
                                 <td><button type="button" class="btn btn-primary btn-md">Search</button></td>
