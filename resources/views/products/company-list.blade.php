@@ -1,7 +1,7 @@
 @extends('layout.user-main')
 
 @section('title')
-    TuringShop - Product list
+    TuringShop - Brands
 @endsection
 
 @section('js')
@@ -84,23 +84,7 @@
     <div class="body-section">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 col-sm-2">
-                    <div class="select-option-section">
-                        <div class="heading">
-                            <h3>Companies</h3>
-                        </div>
-                        <div class="body-option-section">
-                            <div class="checkbox">
-                                <label><input type="checkbox" id="select_all_companies" checked>Select all</label>
-                            </div>
-                            @forelse($companyList as $company)
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="companies_checkbox" value="{{$company->id}}" checked>{{$company->name}}</label>
-                            </div>
-                            @empty
-                            @endforelse
-                        </div>
-                    </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
                     <div class="select-option-section">
                         <div class="heading">
                             <h3>Categories</h3>
@@ -120,36 +104,21 @@
                 </div>
                 <div class="col-md-9 col-sm-9">
                     <div class="row">
-                        <h3 class="shop-top-title">{{$title}}</h3>
+                        <h3 class="shop-top-title">Brands</h3>
                     </div>
-                    @forelse($productList->chunk(5) as $products)
-                    <div class="row">
-                        @foreach($products as $product)
-                            <div class="col-md-2 col-sm-3 body-items">
-                                <div class="wish-icon">
-                                    @if(session()->has('loggedUser'))
-                                        <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
-                                    @else
-                                        <a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
-                                    @endif
+                    @forelse($companyList->chunk(5) as $companies)
+                        <div class="row">
+                            @foreach($companies as $company)
+                                <div class="col-md-2 col-sm-3 body-items">
+                                    <div class="product-image">
+                                        <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/{{$company->logo}}"></a>
+                                    </div>
+                                    <div class="product-specification">
+                                        <a href="#"><h4><center>{{$company->name}}</center></h4></a>
+                                    </div>
                                 </div>
-                                <div class="product-image">
-                                    <a href="{{route('home.productDetails', [$product->id])}}"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/{{$product->image}}"></a>
-                                </div>
-                                <div class="product-specification">
-                                    <a href="{{route('home.productDetails', [$product->id])}}"><h4>{{$product->name}}</h4></a>
-                                    <p>{{$product->details}}</p>
-                                    <div class="price"><strong>&lrm;Price: ৳{{$product->sell_price}}</strong></div>
-                                </div>
-                                <div class="cart-icon">
-                                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                                </div>
-                                <div class="details-icon pull-right">
-                                    <a href="{{route('home.productDetails', [$product->id])}}"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
                     @empty
                     @endforelse
                 </div>

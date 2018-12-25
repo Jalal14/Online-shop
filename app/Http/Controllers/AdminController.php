@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Crypt;
 use App\Admin;
 use App\Gender;
@@ -10,6 +9,7 @@ use App\Status;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller

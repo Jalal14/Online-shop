@@ -23,15 +23,26 @@
                                         <table>
                                             <tr>
                                                 <td><label>Full name</label></td>
+                                                <td><label> : &nbsp;&nbsp;</label></td>
+                                                <td><label> {{$user->name}}</label></td>
                                             </tr>
+                                            <tr><td><hr></td></tr>
                                             <tr>
                                                 <td><label>Email address</label></td>
+                                                <td><label> : </label></td>
+                                                <td><label> {{$user->email}}</label></td>
                                             </tr>
-                                            <tr>
-                                                <td><label>Full address</label></td>
-                                            </tr>
+                                            <tr><td><hr></td></tr>
                                             <tr>
                                                 <td><label>Contact no</label></td>
+                                                <td><label> : </label></td>
+                                                <td><label> {{$user->phone}}</label></td>
+                                            </tr>
+                                            <tr><td><hr></td></tr>
+                                            <tr>
+                                                <td><label>Full address</label></td>
+                                                <td><label> : </label></td>
+                                                <td><label> {{$user->address}}</label></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -41,27 +52,33 @@
                                 <div class="panel panel-default col-lg-8 col-md-8 col-sm-8">
                                     <div class="panel-heading"><h4>Update information</h4></div>
                                     <div class="panel-body">
-                                        <form>
+                                        <form method="post">
+                                            {{csrf_field()}}
                                             <div class="form-group">
                                                 <label for="name">Name:</label>
-                                                <input type="text" class="form-control" value="Full name" name="name">
+                                                <input type="text" class="form-control" value="{{$user->name}}" name="name">
                                             </div>
                                             <div class="form-group">
                                                 <label for="email">Email:</label>
-                                                <input type="email" class="form-control" value="Email address" name="email">
+                                                <input type="email" class="form-control" value="{{$user->email}}" name="email">
                                             </div>
                                             <div class="form-group">
-                                                <label for="address">Address:</label>
-                                                <input type="text" class="form-control" value="Full address" name="address">
+                                                <label for="address">Contact:</label>
+                                                <input type="text" class="form-control" value="{{$user->phone}}" name="phone">
                                             </div>
                                             <div class="form-group">
                                                 <label for="contact">Address:</label>
-                                                <input type="text" class="form-control" value="Mobile number" name="contact">
+                                                <input type="text" class="form-control" value="{{$user->address}}" name="address">
                                             </div>
                                             <div class="form-group">
                                                 <input type="submit" class="form-control btn btn-success" value="Update">
                                             </div>
                                         </form>
+                                        @if($errors->any())
+                                            @foreach($errors->all() as $error)
+                                                <p class="error">* {{$error}}</p>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>

@@ -52,7 +52,8 @@ class ProductController extends Controller
         $product->available = $request->quantity;
         $product->sold = 0;
         $product->status = $request->status;
-        $product->discount = 0;
+        $product->discount = $request->discount;
+        $product->adder = date('Y-m-d');
         if ($product->save() == 1) {
             $file = $request->file('image');
             $fileName = $product->id.".".$file->getClientOriginalExtension();

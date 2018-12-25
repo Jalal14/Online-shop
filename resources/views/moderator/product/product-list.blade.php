@@ -35,6 +35,7 @@
                                 <th>Discount</th>
                                 <th>Available</th>
                                 <th>Sold</th>
+                                <th>Add date</th>
                                 <th>Category</th>
                                 <th>Company</th>
                                 <th>Status</th>
@@ -49,6 +50,7 @@
                                     <td>{{$product->discount}}%</td>
                                     <td>{{$product->available}}</td>
                                     <td>{{$product->sold}}</td>
+                                    <td>{{$product->added}}</td>
                                     <td>{{$product->category_name}}</td>
                                     <td>{{$product->company_name}}</td>
                                     <td>{{$product->status_name}}</td>

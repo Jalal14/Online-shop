@@ -12,14 +12,45 @@
 */
 
 /* User section */
-Route::get('/', function (){
-    return view('public.home');
-});
-Route::get('/user/details', function (){
-    return view('products.product-details');
+Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/best-sale', 'HomeController@bestSale')->name('home.bestSale');
+Route::get('/new-arrivals', 'HomeController@newArrivals')->name('home.newArrivals');
+Route::get('/brands', 'HomeController@companyList')->name('home.companyList');
+
+Route::get('/product/brands/{id}', 'HomeController@productsByCompany')->name('home.productsByCompany');
+Route::get('/product/category/{id}', 'HomeController@productsByCategory')->name('home.productsByCategory');
+
+Route::get('/product-details/{id}', 'HomeController@prductDetails')->name('home.productDetails');
+
+Route::get('/cart', 'UserController@cartList')->name('user.cartList');
+Route::get('/wish-list', 'UserController@wishList')->name('user.wishList');
+Route::get('/checkout', 'UserController@checkout')->name('user.checkout');
+
+Route::get('/profile', 'UserController@editProfile')->name('user.editProfile');
+Route::post('/profile', 'UserController@updateProfile')->name('user.updateProfile');
+
+Route::get('/change-password', 'UserController@editPassword')->name('user.editPassword');
+Route::post('/change-password', 'UserController@updatePassword')->name('user.updatePassword');
+
+
+Route::post('/user-registration', 'UserAjaxController@store')->name('userAjax.registration');
+Route::get('/ajax/checkEmail', 'UserAjaxController@checkEmail')->name('userAjax.checkEmail');
+Route::get('/ajax/store', 'UserAjaxController@store')->name('userAjax.store');
+
+Route::get('/registration/{token}/{id}', 'RegistrationController@regToken')->name('registration.regToken');
+
+Route::get('/ajax/login', 'UserAjaxController@userLogin')->name('userAjax.userLogin');
+
+Route::group(['middleware' => ['userSess']], function () {
+    Route::get('/wish-list', 'WishListController@index')->name('wish.index');
+    Route::get('/wish-list/{id}', 'WishListController@store')->name('wish.store');
 });
 
+Route::get('/logout', 'LogoutController@userLogout')->name('logout.userLogout');
+
 /* End user section */
+
+
 
 /* Admin section */
 Route::get('/admin/login', 'LoginController@index')->name('admin.login');

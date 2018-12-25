@@ -53,6 +53,8 @@ body{
 	line-height: 30px;
 }
 
+#change-password-dropdown{ margin-right: 60px; }
+
 .heading > h3{
 	background-color: #F37020;
 	text-align: center;
@@ -122,9 +124,11 @@ body{
 }
 
 .shop-top-section .row .items{
-	margin: 5px;
+	margin: 1%;
+    padding: 3%;
+    border: 1px solid gray;
+    border-radius: 15px;
 }
-
 
 .shop-top-section .row .items > a > img{
 	background-color: white;
@@ -205,3 +209,33 @@ text-decoration: none;
 .panel-heading{ background-color: #f4f4f4; }
 
 .error{ color: red; }
+
+.success{ color: green; }
+
+.list-image{
+	border: 1px solid lightgray;
+	height: 50px;
+	width: 50px;
+}
+
+.loader {
+    border-top: 10px solid blue;
+    border-bottom: 10px solid blue;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: 46%;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

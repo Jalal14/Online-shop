@@ -14,11 +14,10 @@
                         <h3>Popular categories</h3>
                     </div>
                     <ul class="nav nav-pills nav-stacked">
-                        <li><a  class="items" href="#">Computer and laptops<div class="arrow"><strong>></strong></div></a>
-                        </li>
-                        <li><a class="items" href="#">Mobile and tablets<div class="arrow"><strong>></strong></div></a></li>
-                        <li><a class="items" href="#">Camera and camcorders<div class="arrow"><strong>></strong></div></a></li>
-                        <li><a class="items" href="#">Computer accessories<div class="arrow"><strong>></strong></div></a></li>
+                        @forelse($topCategories as $category)
+                            <li><a  class="items" href="#">{{$category->name}}<div class="arrow"><strong>></strong></div></a></li>
+                        @empty
+                        @endforelse
                     </ul>
                 </div>
                 <div class="col-md-5 col-sm-5">
@@ -82,252 +81,86 @@
     <div class="shop-top-section container-fluid">
         <div class="row">
             <h3 class="shop-top-title">Top Brands</h3>
-            <a href="" class="shop-top-button"><img class="img-responsive" src="{{asset('images')}}/see-more-icon.png"></a>
+            <a href="{{route('home.companyList')}}" class="shop-top-button"><img class="img-responsive" src="{{asset('images')}}/see-more-icon.png"></a>
         </div>
         <div class="row">
-            <div class="col-md-2 col-sm-2 items">
-                <a href="#"><img src="{{asset('images')}}/company/apple-logo.png"><h4>Apple</h4></a>
-            </div>
-            <div class="col-md-2 col-sm-2 items">
-                <a href="#"><img src="{{asset('images')}}/company/huawei-logo.png"><h4>Huawei</h4></a>
-            </div>
-            <div class="col-md-2 col-sm-2 items">
-                <a href="#"><img src="{{asset('images')}}/company/hp-logo.png"><h4>HP</h4></a>
-            </div>
-            <div class="col-md-2 col-sm-2 items">
-                <a href="#"><img src="{{asset('images')}}/company/samsung-logo.png"><h4>Samsung</h4></a>
-            </div>
-            <div class="col-md-2 col-sm-2 items">
-                <a href="#"><img src="{{asset('images')}}/company/dell-logo.png"><h4>Dell</h4></a>
-            </div>
+            @forelse($topBrands as $topBrand)
+                <div class="col-md-2 col-sm-2 items">
+                    <a href="#">
+                        <img src="{{asset('images')}}/{{$topBrand->logo}}" alt="{{$topBrand->name}}">
+                        <h4><center>{{$topBrand->name}}</center></h4>
+                    </a>
+                </div>
+            @empty
+            @endforelse
         </div>
     </div>
     <div class="shop-top-section container-fluid">
         <div class="row">
             <h3 class="shop-top-title">Best Selling Products</h3>
-            <a href="/best-sell" class="shop-top-button"><img class="img-responsive" src="{{asset('images')}}/see-more-icon.png"></a>
+            <a href="{{route('home.bestSale')}}" class="shop-top-button"><img class="img-responsive" src="{{asset('images')}}/see-more-icon.png"></a>
         </div>
         <div class="row">
+            @forelse($bestSales as $bestSale)
             <div class="col-md-2 col-sm-3 body-items">
                 <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                    @if(session()->has('loggedUser'))
+                        <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                    @else
+                        <a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                    @endif
                 </div>
                 <div class="product-image">
-                    <a href="/details"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/imac.png"></a>
+                    <a href="{{route('home.productDetails', [$bestSale->id])}}"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/{{$bestSale->image}}" alt="{{$bestSale->name}}"></a>
                 </div>
                 <div class="product-specification">
-                    <a href="/details">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
+                    <a href="{{route('home.productDetails', [$bestSale->id])}}"><h4>{{$bestSale->name}}</h4></a>
+                    <p>{{$bestSale->details}}</p>
+                    <div class="price"><strong>&lrm;Price: ৳{{$bestSale->sell_price}}</strong></div>
                 </div>
                 <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
+                    <a href="{{route('home.productDetails', [$bestSale->id])}}"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
                 </div>
                 <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
+                    <a href="{{route('home.productDetails', [$bestSale->id])}}"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wished-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/camera.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/iphone.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4>
-                    </a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wished-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/lenovo.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/tablet.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
+            @empty
+            @endforelse
         </div>
     </div>
     <div class="shop-top-section container-fluid">
         <div class="row">
             <h3 class="shop-top-title">New Products</h3>
-            <a href="/new-arrival" class="shop-top-button"><img class="img-responsive" src="{{asset('images')}}/see-more-icon.png"></a>
+            <a href="{{route('home.newArrivals')}}" class="shop-top-button"><img class="img-responsive" src="{{asset('images')}}/see-more-icon.png"></a>
         </div>
         <div class="row">
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+            @forelse($newProducts as $newProduct)
+                <div class="col-md-2 col-sm-3 body-items">
+                    <div class="wish-icon">
+                        @if(session()->has('loggedUser'))
+                            <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                        @else
+                            <a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                        @endif
+                    </div>
+                    <div class="product-image">
+                        <a href="{{route('home.productDetails', [$newProduct->id])}}"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/{{$newProduct->image}}"></a>
+                    </div>
+                    <div class="product-specification">
+                        <a href="{{route('home.productDetails', [$newProduct->id])}}"><h4>{{$newProduct->name}}</h4></a>
+                        <p>{{$newProduct->details}}</p>
+                        <div class="price"><strong>&lrm;Price: ৳{{$newProduct->sell_price}}</strong></div>
+                    </div>
+                    <div class="cart-icon">
+                        <a href="{{route('home.productDetails', [$newProduct->id])}}"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
+                    </div>
+                    <div class="details-icon pull-right">
+                        <a href="{{route('home.productDetails', [$newProduct->id])}}"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
+                    </div>
                 </div>
-                <div class="product-image">
-                    <a href="/details"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/nokia.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="/details">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wished-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/msi.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/mate.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4>
-                    </a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wished-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/cam.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 body-items">
-                <div class="wish-icon">
-                    <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
-                </div>
-                <div class="product-image">
-                    <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/vaio.png"></a>
-                </div>
-                <div class="product-specification">
-                    <a href="">
-                        <h4>Canon camera</h4></a>
-                    <p>Things will get with product: A smart box as lamp holderLED basement
-                        Accrylic design sheetA remote f..</p>
-                    <div class="price"><strong>&lrm;Price: ৳1,200.00</strong></div>
-                </div>
-                <div class="cart-icon">
-                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
-                </div>
-                <div class="details-icon pull-right">
-                    <a href="#"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>
-                </div>
-            </div>
+            @empty
+            @endforelse
         </div>
     </div>
 @endsection

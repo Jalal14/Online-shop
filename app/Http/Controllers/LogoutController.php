@@ -14,6 +14,6 @@ class LogoutController extends Controller
     public function userLogout(Request $request)
     {
         $request->session()->flush();
-        return redirect()->route('admin.login');
+        return redirect()->back();
     }
 }

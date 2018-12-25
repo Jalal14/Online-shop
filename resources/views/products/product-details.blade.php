@@ -18,10 +18,10 @@
             <div class="col-md-8 col-sm-12" id="details-body">
                 <div id="content">
                     <div class="wish-icon">
-                        <a href="#"><img class="img-responsive pull-right" src="{{asset('images')}}/wish-icon.png"></a>
+                        <a href={{route('wish.store', [$product->id])}}><img class="img-responsive pull-right" src="{{asset('images')}}/wish-icon.png"></a>
                     </div>
                     <div class="thumbnail">
-                        <img class="img-thumbnail img-responsive" src="{{asset('images')}}/products/imac.png">
+                        <img class="img-thumbnail img-responsive" src="{{asset('images')}}/{{$product->image}}">
                     </div>
                 </div>
                 <ul class="nav nav-tabs">
@@ -31,41 +31,44 @@
 
                 <div class="tab-content">
                     <div id="product-details" class="tab-pane fade in active">
-                        <h3>This is heading of details</h3>
-                        <br>
-                        <ul>
-                            <li>This is first delails</li>
-                            <li>This is second delails</li>
-                            <li>This is third delails</li>
-                            <li>This is fourth delails</li>
-                        </ul>
+                        <table class="table table-hover table-striped table-bordered table-responsive">
+                            @forelse($detailsList as $detail)
+                                <tr>
+                                    <td>{{$detail->details}}</td>
+                                </tr>
+                            @empty
+                            @endforelse
+                        </table>
                     </div>
                     <div id="product-specification" class="tab-pane fade">
-                        <h3>This is heading of specification</h3>
-                        <br>
-                        <ul>
-                            <li>This is first specification</li>
-                            <li>This is second specification</li>
-                            <li>This is third specification</li>
-                            <li>This is fourth specification</li>
-                        </ul>
+                        <table class="table table-hover table-striped table-bordered table-responsive">
+                            @forelse($specificationList as $specification)
+                                <tr>
+                                    <td><label>{{$specification->title}}</label></td>
+                                    <td>{{$specification->specification}}</td>
+                                </tr>
+                            @empty
+                            @endforelse
+                        </table>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-12" id="order">
-                <h3>iMAC</h3>
-                <h4>Brand: <a href="#">Apple</a></h4>
-                <h4>Availability: In stock</h4>
-                <h3>&lrm;Price: ৳1,200.00</h3>
+                <h3>{{$product->name}}</h3>
+                <h4>Brand: <a href="#">{{$product->company_name}}</a></h4>
+                <h4>Category: <a href="#">{{$product->category_name}}</a></h4>
+                <h4>Availability: {{$product->status_name}}</h4>
+                <h3>&lrm;Price: ৳{{$product->sell_price}}</h3>
                 <form>
                     <table>
                         <tr>
                             <td><h4> Quantity: </h4></td>
-                            <td><input type="number" name="uantity" value="1" id="quantity"></td>
+                            <td><input type="number" name="quantity" value="1" id="quantity"></td>
                         </tr>
                         <tr>
                             <td><h4> Total price: &nbsp;৳</h4></td>
-                            <td><h4 id="total_price">1200</h4></td>
+                            <td><h4 id="total_price">{{$product->sell_price}}</h4></td>
+                            <td><input type="hidden" id="unit_price" value="{{$product->sell_price}}"></td>
                         </tr>
                     </table>
                     <a href="/checkout"><input type="submit" class="btn btn-primary btn-block" name="submit" value="Add to cart"></a>
@@ -73,3 +76,4 @@
             </div>
         </div>
     </div>
+@endsection
