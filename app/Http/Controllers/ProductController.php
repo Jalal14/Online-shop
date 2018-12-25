@@ -53,7 +53,7 @@ class ProductController extends Controller
         $product->sold = 0;
         $product->status = $request->status;
         $product->discount = $request->discount;
-        $product->adder = date('Y-m-d');
+        $product->added = date('Y-m-d');
         if ($product->save() == 1) {
             $file = $request->file('image');
             $fileName = $product->id.".".$file->getClientOriginalExtension();

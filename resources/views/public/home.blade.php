@@ -105,7 +105,11 @@
             <div class="col-md-2 col-sm-3 body-items">
                 <div class="wish-icon">
                     @if(session()->has('loggedUser'))
-                        <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                        @if(in_array($bestSale->id, $userWishList))
+                            <a href="{{route('wish.destroy', [$bestSale->id])}}"><img class="img-responsive pull-right" title="Remove from wish list" src="{{asset('images')}}/wished-icon.png"></a>
+                        @else
+                            <a href="{{route('wish.store', [$bestSale->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                        @endif
                     @else
                         <a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
                     @endif
@@ -139,7 +143,12 @@
                 <div class="col-md-2 col-sm-3 body-items">
                     <div class="wish-icon">
                         @if(session()->has('loggedUser'))
-                            <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                            @if(in_array($newProduct->id, $userWishList))
+                                <a href="{{route('wish.destroy', [$newProduct->id])}}"><img class="img-responsive pull-right" title="Remove from wish list" src="{{asset('images')}}/wished-icon.png"></a>
+                            @else
+                                <a href="{{route('wish.store', [$newProduct->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                                {{--<a href="{{route('wish.store', [$bestSale->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>--}}
+                            @endif
                         @else
                             <a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
                         @endif

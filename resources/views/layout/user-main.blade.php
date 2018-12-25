@@ -75,8 +75,15 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{route('wish.index')}}" id="wish-link"><i class="fa fa-heart"></i> Wish list <span class="badge badge-light">0</span></a></li>
-                    <li><a href="{{route('user.cartList')}}" id="cart-link"><i class="fa fa-shopping-cart"></i> Cart <span class="badge badge-pill badge-light">0</span></a></li>
+                    @if(session()->has('loggedUser'))
+                        <li><a href="{{route('wish.index')}}" id="wish-link"><i class="fa fa-heart"></i> Wish list <span class="badge">{{$wishCount}}</span></a></li>
+                        <li><a href="{{route('user.cartList')}}" id="cart-link"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">{{$cartCount}}</span></a></li>
+                        {{--<a href="{{route('wish.store', [$bestSale->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>--}}
+                    @else
+                        <li><a href="#" data-toggle="modal" data-target="#login-modal" id="wish-link"><i class="fa fa-heart"></i> Wish list <span class="badge">{{$wishCount}}</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#login-modal" id="cart-link"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">{{$cartCount}}</span></a></li>
+                        {{--<a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>--}}
+                    @endif
                     @if(session()->has('loggedUser'))
                         <li class="dropdown mega-dropdown">
                             <a href="{{route('user.editProfile')}}" id="account-link">My account  <i class="fa fa-user-circle-o"></i></a>

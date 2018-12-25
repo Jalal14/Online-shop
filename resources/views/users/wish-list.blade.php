@@ -30,11 +30,11 @@
                     </tr>
                     @forelse($wishList as $wish)
                     <tr>
-                        {{--<td><img class="list-image" src="{{asset('images')}}/products/1.jpg"></td>--}}
-                        <td>{{$wish->product}}<br> <a href="#">Add to cart</a> </td>
-                        <td>12055415</td>
-                        <td>In stock</td>
-                        <td><a href="#">Remove</a> </td>
+                        <td><img class="list-image" src="{{asset('images')}}/{{$wish->image}}"></td>
+                        <td>{{$wish->name}}<br> <a href="{{route('home.productDetails', [$wish->product_id])}}">Add to cart</a> </td>
+                        <td>{{$wish->sell_price}}</td>
+                        <td>{{$wish->status_name}}</td>
+                        <td><a href="{{route('wish.destroy', [$wish->product_id])}}">Remove</a> </td>
                     </tr>
                     @empty
                     @endforelse

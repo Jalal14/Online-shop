@@ -10,7 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/* username: fullname@email.com
+password: 000000 */
 /* User section */
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/best-sale', 'HomeController@bestSale')->name('home.bestSale');
@@ -44,6 +45,7 @@ Route::get('/ajax/login', 'UserAjaxController@userLogin')->name('userAjax.userLo
 Route::group(['middleware' => ['userSess']], function () {
     Route::get('/wish-list', 'WishListController@index')->name('wish.index');
     Route::get('/wish-list/{id}', 'WishListController@store')->name('wish.store');
+    Route::get('/wish-list/remove/{product}', 'WishListController@destroy')->name('wish.destroy');
 });
 
 Route::get('/logout', 'LogoutController@userLogout')->name('logout.userLogout');
