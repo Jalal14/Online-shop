@@ -16,7 +16,7 @@ class VerifyUserSession
     public function handle($request, Closure $next)
     {
         if (!$request->session()->has('loggedUser')){
-            return redirect()->back();
+            return redirect()->route('home.index');
         }
         return $next($request);
     }

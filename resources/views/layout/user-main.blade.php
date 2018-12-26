@@ -77,7 +77,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if(session()->has('loggedUser'))
                         <li><a href="{{route('wish.index')}}" id="wish-link"><i class="fa fa-heart"></i> Wish list <span class="badge">{{$wishCount}}</span></a></li>
-                        <li><a href="{{route('user.cartList')}}" id="cart-link"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">{{$cartCount}}</span></a></li>
+                        <li><a href="{{route('cart.index')}}" id="cart-link"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">{{$cartCount}}</span></a></li>
                         {{--<a href="{{route('wish.store', [$bestSale->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>--}}
                     @else
                         <li><a href="#" data-toggle="modal" data-target="#login-modal" id="wish-link"><i class="fa fa-heart"></i> Wish list <span class="badge">{{$wishCount}}</span></a></li>

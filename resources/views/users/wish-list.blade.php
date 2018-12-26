@@ -30,8 +30,8 @@
                     </tr>
                     @forelse($wishList as $wish)
                     <tr>
-                        <td><img class="list-image" src="{{asset('images')}}/{{$wish->image}}"></td>
-                        <td>{{$wish->name}}<br> <a href="{{route('home.productDetails', [$wish->product_id])}}">Add to cart</a> </td>
+                        <td><a href="{{route('home.productDetails', [$wish->product_id])}}"><img class="list-image" src="{{asset('images')}}/{{$wish->image}}"></a></td>
+                        <td><a href="{{route('home.productDetails', [$wish->product_id])}}">{{$wish->name}}</a><br><br><a href="{{route('home.productDetails', [$wish->product_id])}}">[Add to cart]</a> </td>
                         <td>{{$wish->sell_price}}</td>
                         <td>{{$wish->status_name}}</td>
                         <td><a href="{{route('wish.destroy', [$wish->product_id])}}">Remove</a> </td>
@@ -42,8 +42,8 @@
                 </table>
             </div>
         </div>
-        <div class="row">
-            <a href="#"><button type="button" class="btn btn-success pull-right">PROCEED TO CHECKOUT</button> </a>
-        </div>
+        {{--<div class="row">--}}
+            {{--<a href="#"><button type="button" class="btn btn-success pull-right">PROCEED TO CHECKOUT</button> </a>--}}
+        {{--</div>--}}
     </div>
 @endsection

@@ -23,8 +23,8 @@ Route::get('/product/category/{id}', 'HomeController@productsByCategory')->name(
 
 Route::get('/product-details/{id}', 'HomeController@prductDetails')->name('home.productDetails');
 
-Route::get('/cart', 'UserController@cartList')->name('user.cartList');
-Route::get('/wish-list', 'UserController@wishList')->name('user.wishList');
+
+//Route::get('/wish-list', 'UserController@wishList')->name('user.wishList');
 Route::get('/checkout', 'UserController@checkout')->name('user.checkout');
 
 Route::get('/profile', 'UserController@editProfile')->name('user.editProfile');
@@ -46,6 +46,12 @@ Route::group(['middleware' => ['userSess']], function () {
     Route::get('/wish-list', 'WishListController@index')->name('wish.index');
     Route::get('/wish-list/{id}', 'WishListController@store')->name('wish.store');
     Route::get('/wish-list/remove/{product}', 'WishListController@destroy')->name('wish.destroy');
+
+    Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::post('/cart/add', 'CartController@store')->name('cart.store');
+    Route::post('/cart/update', 'CartController@update')->name('cart.update');
+    Route::get('/cart/remove/{product}', 'CartController@destroy')->name('cart.destroy');
+    Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
 });
 
 Route::get('/logout', 'LogoutController@userLogout')->name('logout.userLogout');

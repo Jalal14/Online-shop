@@ -2,84 +2,90 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Cart;
+use App\Product;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $cartList = DB::table('view_cart')
+            ->where('customer', $request->session()->get('loggedUser'))->get();
+        $grand_total = 0;
+        if(count($cartList) > 0){
+            foreach ($cartList as $cart){
+                if($cart->discount > 0){
+                    $cart->sell_price -= ($cart->sell_price*$cart->discount/100);
+                }
+                $cart->sub_total = $cart->quantity*$cart->sell_price;
+                $grand_total += $cart->sub_total;
+            }
+        }
+        return view('users.cart-list')
+            ->with('cartList', $cartList)
+            ->with('grand_total', $grand_total);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $product = Product::find($request->id);
+        $user = $request->session()->get('loggedUser');
+        $cart = Cart::where('customer', $user)
+            ->where('product', $product->id)
+            ->first();
+        if ($cart){
+            $cart->quantity += $request->quantity;
+        }else{
+            $cart = new Cart();
+            $cart->customer = $user;
+            $cart->product = $product->id;
+            $cart->quantity = $request->quantity;
+            $cart->add_date = date('Y-m-d H:i:s');
+        }
+        if ($product->available < $cart->quantity){
+            $request->session()->flash('msg', 'Product quantity is not available');
+            return redirect()->back();
+        }
+        $cart->save();
+        return redirect()->back();
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
     public function show(Cart $cart)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Cart $cart)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request)
     {
-        //
+        $product = Product::find($request->id);
+        if ($product->quantity < $request->quantity){
+            $request->session()->flash('msg', 'Product quantity is not available');
+            return redirect()->back();
+        }
+        $cart = Cart::where('customer', $request->session()->get('loggedUser'))
+            ->where('product', $request->id)
+            ->first();
+        $cart->quantity = $request->quantity;
+        $cart->save();
+        return redirect()->back();
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cart $cart)
+    public function destroy($product, Request $request)
     {
-        //
+        Cart::where('customer', $request->session()->get('loggedUser'))
+            ->where('product', $product)
+            ->delete();
+        return redirect()->back();
+    }
+    public function clear(Request $request)
+    {
+        Cart::where('customer', $request->session()->get('loggedUser'))->delete();
+        return redirect()->back();
     }
 }

@@ -147,7 +147,6 @@
                                 <a href="{{route('wish.destroy', [$newProduct->id])}}"><img class="img-responsive pull-right" title="Remove from wish list" src="{{asset('images')}}/wished-icon.png"></a>
                             @else
                                 <a href="{{route('wish.store', [$newProduct->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
-                                {{--<a href="{{route('wish.store', [$bestSale->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>--}}
                             @endif
                         @else
                             <a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>

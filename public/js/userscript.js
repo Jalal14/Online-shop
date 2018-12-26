@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
     $(".loader").hide();
+    $(".update-cart").hide();
 
     $('button[value=Login]').click(function() {
         $("#emailMsg").html('');
@@ -73,8 +74,15 @@ $(document).ready(function () {
         }
         return false;
     });
-
-
+    $('.edit-cart').click(function () {
+        var text = $(this).text().split(" ")[0];
+        if (text != "Update"){
+            var row = "<input type='text' name='quantity' value=" + text + "><button type='submit' id='update-cart-btn ' class='btn btn-success btn-sm pull-right'>Update</button>";
+            $(this).html(row);
+            $(this).removeAttr('class');
+            $(this).attr('id', 'update-cart');
+        }
+    });
     function checkEmail() {
         $.ajax({
             url		: 	'/ajax/checkEmail',

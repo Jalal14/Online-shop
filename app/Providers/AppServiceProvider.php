@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\View; //to share variable
 use Session;
 use App\WishList;
 use App\Cart;
+use App\Gender;
+use App\Company;
+use App\Category;
 use Illuminate\Http\Request;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
             $cartCount = 0;
             $wishCount = 0;
             $userWishList = [];
+            $genderList = Gender::all();
+            $companyList = Company::all();
+            $categoryList = Category::all();
             if(Session::has('loggedUser')){
                 $user = Session('loggedUser');
                 $wishCount = WishList::where('customer', $user)->count();
@@ -30,7 +36,10 @@ class AppServiceProvider extends ServiceProvider
             }
             $view->with('wishCount', $wishCount)
                 ->with('cartCount', $cartCount)
-                ->with('userWishList', $userWishList);
+                ->with('userWishList', $userWishList)
+                ->with('genderList', $genderList)
+                ->with('companyList', $companyList)
+                ->with('categoryList', $categoryList);
         });
     }
 
