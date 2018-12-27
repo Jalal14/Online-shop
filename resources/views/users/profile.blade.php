@@ -90,34 +90,27 @@
                                             <thead>
                                                 <tr>
                                                     <th>Order id</th>
+                                                    <th>Mobile</th>
                                                     <th>Shiping address</th>
                                                     <th>Date</th>
                                                     <th>Order total</th>
                                                     <th>Status</th>
+                                                    <th>Details</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>564654</td>
-                                                    <td>Full address goes here</td>
-                                                    <td>14-5-2018</td>
-                                                    <td>564645</td>
-                                                    <td>Delivered</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>564654</td>
-                                                    <td>Full address goes here</td>
-                                                    <td>14-5-2018</td>
-                                                    <td>564645</td>
-                                                    <td>Delivered</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>564654</td>
-                                                    <td>Full address goes here</td>
-                                                    <td>14-5-2018</td>
-                                                    <td>564645</td>
-                                                    <td>Delivered</td>
-                                                </tr>
+                                                @forelse($invoiceList as $invoice)
+                                                    <tr>
+                                                        <td>{{$invoice->id}}</td>
+                                                        <td>{{$invoice->phone1}}</td>
+                                                        <td>{{$invoice->address}}</td>
+                                                        <td>{{$invoice->order_date}}</td>
+                                                        <td>{{$invoice->price}}</td>
+                                                        <td>{{$invoice->status_name}}</td>
+                                                        <td><a href="{{route('order.userOrders', [$invoice->id])}}">View</a> </td>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>

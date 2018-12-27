@@ -23,10 +23,6 @@ Route::get('/product/category/{id}', 'HomeController@productsByCategory')->name(
 
 Route::get('/product-details/{id}', 'HomeController@prductDetails')->name('home.productDetails');
 
-
-//Route::get('/wish-list', 'UserController@wishList')->name('user.wishList');
-Route::get('/checkout', 'UserController@checkout')->name('user.checkout');
-
 Route::get('/profile', 'UserController@editProfile')->name('user.editProfile');
 Route::post('/profile', 'UserController@updateProfile')->name('user.updateProfile');
 
@@ -52,6 +48,11 @@ Route::group(['middleware' => ['userSess']], function () {
     Route::post('/cart/update', 'CartController@update')->name('cart.update');
     Route::get('/cart/remove/{product}', 'CartController@destroy')->name('cart.destroy');
     Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
+
+    Route::get('/checkout', 'OrderController@checkout')->name('order.checkout');
+    Route::post('/checkout', 'OrderController@order')->name('order.order');
+
+    Route::get('/order/{invoice}', 'OrderController@userOrders')->name('order.userOrders');
 });
 
 Route::get('/logout', 'LogoutController@userLogout')->name('logout.userLogout');

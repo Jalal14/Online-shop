@@ -15,7 +15,7 @@
                     </div>
                     <ul class="nav nav-pills nav-stacked">
                         @forelse($topCategories as $category)
-                            <li><a  class="items" href="#">{{$category->name}}<div class="arrow"><strong>></strong></div></a></li>
+                            <li><a  class="items" href="{{route('home.productsByCategory', [$category->category])}}">{{$category->name}}<div class="arrow"><strong>></strong></div></a></li>
                         @empty
                         @endforelse
                     </ul>
@@ -86,7 +86,7 @@
         <div class="row">
             @forelse($topBrands as $topBrand)
                 <div class="col-md-2 col-sm-2 items">
-                    <a href="#">
+                    <a href="{{route('home.productsByCompany', [$topBrand->company])}}">
                         <img src="{{asset('images')}}/{{$topBrand->logo}}" alt="{{$topBrand->name}}">
                         <h4><center>{{$topBrand->name}}</center></h4>
                     </a>
@@ -103,6 +103,11 @@
         <div class="row">
             @forelse($bestSales as $bestSale)
             <div class="col-md-2 col-sm-3 body-items">
+                @if($bestSale->discount > 0)
+                    <div class="discount-section">
+                        <div class="discount">{{$bestSale->discount}}%</div>
+                    </div>
+                @endif
                 <div class="wish-icon">
                     @if(session()->has('loggedUser'))
                         @if(in_array($bestSale->id, $userWishList))
@@ -120,7 +125,13 @@
                 <div class="product-specification">
                     <a href="{{route('home.productDetails', [$bestSale->id])}}"><h4>{{$bestSale->name}}</h4></a>
                     <p>{{$bestSale->details}}</p>
-                    <div class="price"><strong>&lrm;Price: ৳{{$bestSale->sell_price}}</strong></div>
+                    <div class="price">
+                        @if($bestSale->discount > 0)
+                            <strong>Price: ৳</strong><small>&lrm;<del>{{$bestSale->sell_price}} </del></small><strong>{{$bestSale->dis_price}}</strong>
+                        @else
+                            <strong>&lrm;Price: ৳{{$bestSale->sell_price}}</strong>
+                        @endif
+                    </div>
                 </div>
                 <div class="cart-icon">
                     <a href="{{route('home.productDetails', [$bestSale->id])}}"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
@@ -141,6 +152,11 @@
         <div class="row">
             @forelse($newProducts as $newProduct)
                 <div class="col-md-2 col-sm-3 body-items">
+                    @if($newProduct->discount > 0)
+                        <div class="discount-section">
+                            <div class="discount">{{$newProduct->discount}}%</div>
+                        </div>
+                    @endif
                     <div class="wish-icon">
                         @if(session()->has('loggedUser'))
                             @if(in_array($newProduct->id, $userWishList))
@@ -158,7 +174,13 @@
                     <div class="product-specification">
                         <a href="{{route('home.productDetails', [$newProduct->id])}}"><h4>{{$newProduct->name}}</h4></a>
                         <p>{{$newProduct->details}}</p>
-                        <div class="price"><strong>&lrm;Price: ৳{{$newProduct->sell_price}}</strong></div>
+                        <div class="price">
+                            @if($newProduct->discount > 0)
+                                <strong>Price: ৳</strong><small>&lrm;<del>{{$newProduct->sell_price}} </del></small><strong>{{$newProduct->dis_price}}</strong>
+                            @else
+                                <strong>&lrm;Price: ৳{{$newProduct->sell_price}}</strong>
+                            @endif
+                        </div>
                     </div>
                     <div class="cart-icon">
                         <a href="{{route('home.productDetails', [$newProduct->id])}}"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>

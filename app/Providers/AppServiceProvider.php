@@ -10,7 +10,7 @@ use App\Cart;
 use App\Gender;
 use App\Company;
 use App\Category;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
             $genderList = Gender::all();
             $companyList = Company::all();
             $categoryList = Category::all();
+            $topCategories = DB::table('view_popular_categories')
+                ->limit(4)
+                ->get();
             if(Session::has('loggedUser')){
                 $user = Session('loggedUser');
                 $wishCount = WishList::where('customer', $user)->count();
@@ -39,7 +42,8 @@ class AppServiceProvider extends ServiceProvider
                 ->with('userWishList', $userWishList)
                 ->with('genderList', $genderList)
                 ->with('companyList', $companyList)
-                ->with('categoryList', $categoryList);
+                ->with('categoryList', $categoryList)
+                ->with('topCategories', $topCategories);
         });
     }
 

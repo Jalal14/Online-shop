@@ -18,18 +18,12 @@ class WishListController extends Controller
      */
     public function index(Request $request)
     {
-        $genderList = Gender::all();
-        $companyList = Company::all();
-        $categoryList = Category::all();
         $wishList = DB::table('view_wishlist')
                         ->where('customer', $request->session()->get('loggedUser'))
                         ->get();
         // $wishList = WishList::where('customer', $request->session()->get('loggedUser'))
         //                     ->get();
         return view('users.wish-list')
-                ->with('genderList', $genderList)
-                ->with('categoryList', $categoryList)
-                ->with('companyList', $companyList)
                 ->with('wishList', $wishList);
     }
 

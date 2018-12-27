@@ -35,6 +35,8 @@
                         <th>Quantity</th>
                         <th>Subtotal</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     @forelse($cartList as $cart)
                     <tr>
                         <td><a href="{{route('home.productDetails', [$cart->id])}}"><img class="list-image" src="{{asset('images')}}/{{$cart->image}}"></a></td>
@@ -52,7 +54,7 @@
                     </tr>
                     @empty
                     @endforelse
-                    </thead>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -61,7 +63,7 @@
         </div>
         <div class="row">
             <a href="{{route('cart.clear')}}"><button type="button" class="btn btn-danger pull-left">CLEAR LIST</button> </a>
-            <a href="{{route('user.checkout')}}"><button type="button" class="btn btn-success pull-right">PROCEED TO CHECKOUT</button> </a>
+            <a href="{{route('order.checkout')}}"><button type="button" class="btn btn-success pull-right">PROCEED TO CHECKOUT</button> </a>
         </div>
     </div>
 @endsection
