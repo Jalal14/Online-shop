@@ -20,7 +20,8 @@ class ProductController extends Controller
     {
         $categoryList = Category::all();
         $companyList = Company::all();
-        $productList = DB::table('view_product')->get();
+        $productList = DB::table('view_product')->paginate(10);
+//        dd($productList->links());
         return view('moderator.product.product-list')
                 ->with('productList', $productList)
                 ->with('categoryList', $categoryList)

@@ -61,10 +61,11 @@
                         <a href="#"><i class="fa fa-gift fa-lg"></i> Sales <span class="arrow"></span></a>
                     </li>
                     <ul class="sub-menu collapse" id="sales">
-                        <li class="active"><a href="/admin/orders">Orders</a></li>
-                        <li><a href="/admin/process">Process</a></li>
-                        <li><a href="/admin/delivered">Delivered</a></li>
-                        <li><a href="/admin/returns">Returns</a></li>
+                        <li class="active"><a href="{{route('information.orders')}}">Pending</a></li>
+                        <li><a href="{{route('information.process')}}">Processing</a></li>
+                        <li><a href="{{route('information.delivered')}}">Delivered</a></li>
+                        <li><a href="{{route('information.returns')}}">Returns</a></li>
+                        <li class="active"><a href="{{route('information.index')}}">Orders</a></li>
                     </ul>
 
                     <li  data-toggle="collapse" data-target="#report" class="collapsed active">

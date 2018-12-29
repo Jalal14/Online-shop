@@ -18,11 +18,39 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
-    $('.add-details-button').click(function () {
-        $('#details-area').clone().attr('id', 'details-area'+$(this).index()).insertAfter('#details-area');
+    $(document).on('click','.add-details',function(){
+        var row = '<div class="form-group row details-area">';
+        row = row + '<div class="col-sm-9">';
+        row = row + '<input type="text" class="form-control details-text" name="details[]" placeholder="Product details">';
+        row = row + '</div>';
+        row = row + '<div class="col-sm-3">';
+        row = row + '<input type="button" class="remove-details btn btn-danger" value="Remove">';
+        row = row + '</div>';
+        row = row + '</div>';
+        $('.details-wrapper').append(row);
     });
-    $('.add-specification-button').click(function () {
-        $('#specification-area').clone().attr('id', 'specification-area'+$(this).index()).insertAfter('#specification-area');
+    $(document).on('click','.remove-details',function(){
+        var row = $('.remove-details').index(this);
+        $('.details-area').eq(row).remove();
+    });
+
+    $(document).on('click','.add-specification',function(){
+        var row = '<div class="form-group row specification-area">';
+        row = row + '<div class="col-sm-3">';
+        row = row + '<input type="text" class="form-control specification-text" name="specTitle[]" placeholder="Title">';
+        row = row + '</div>';
+        row = row + '<div class="col-sm-6">';
+        row = row + '<input type="text" class="form-control specification-text" name="specDesc[]" placeholder="Description">';
+        row = row + '</div>';
+        row = row + '<div class="col-sm-3">';
+        row = row + '<input type="button" class="remove-specification btn btn-danger" value="Remove">';
+        row = row + '</div>';
+        row = row + '</div>';
+        $('.specification-wrapper').append(row);
+    });
+    $(document).on('click','.remove-specification',function(){
+        var row = $('.remove-specification').index(this);
+        $('.specification-area').eq(row).remove();
     });
 });
 

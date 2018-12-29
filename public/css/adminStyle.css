@@ -133,17 +133,15 @@
 .tile-footer a{
 	color: white;
 }
-.tile-footer a:hover{
-	text-decoration: none;
-}
+.tile-footer a:hover{ text-decoration: none; }
 
 .image-content{
 	height: 68px;
 	width: 68px;
 }
 
-#admin-photo{ height: 200px;}
+/*#admin-photo{ height: 200px;}*/
 
-.content-area{ margin-left: 16%; margin-top: 1%; }
+.content-area{ margin-left: 20%; margin-top: 1%; }
 
 .img-employee{ height: 80px; width: 80px;}

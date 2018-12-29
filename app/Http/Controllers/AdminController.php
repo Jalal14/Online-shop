@@ -3,20 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Crypt;
-use App\Admin;
-use App\Gender;
-use App\Status;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\DB;
+use App\Admin;
+use App\Gender;
+use App\Status;
+use App\Invoice;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('moderator.home');
+        $currentOrders = Invoice::where('status', 6)->sum('quantity');
+        $totalprocessing = Invoice::where('status', 7)->sum('quantity');
+        $totaldelivers = Invoice::where('status', 8)->sum('quantity');
+        $totalreturns = Invoice::where('status', 9)->sum('quantity');
+        $invoicList = DB::table('view_invoice')
+            ->where('status', 6)
+            ->paginate(20);
+        return view('moderator.home')
+            ->with('currentOrders', $currentOrders)
+            ->with('totalprocessing', $totalprocessing)
+            ->with('totaldelivers', $totaldelivers)
+            ->with('totalreturns', $totalreturns)
+            ->with('invoiceList', $invoicList);
     }
 
     public function create()

@@ -55,15 +55,18 @@
                                     <td>{{$product->company_name}}</td>
                                     <td>{{$product->status_name}}</td>
                                     <td><a href="{{route('product.addQuantity', [$product->id])}}">Add quantity</a> | <a href="{{route('product.edit', [$product->id])}}">Update</a>
-                                        @if(session()->has('loggedAdmin'))
-                                            <br><a href="#">Delete</a>
-                                        @endif
+                                        {{--@if(session()->has('loggedAdmin'))--}}
+                                            {{--<br><a href="#">Delete</a>--}}
+                                        {{--@endif--}}
                                     </td>
                                 </tr>
                             @empty
                             @endforelse
                             </thead>
                         </table>
+                    </div>
+                    <div class="pagination">
+                        {{ $productList->links() }}
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3" id="search-area">

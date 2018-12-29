@@ -65,7 +65,7 @@ class CartController extends Controller
     public function update(Request $request)
     {
         $product = Product::find($request->id);
-        if ($product->quantity < $request->quantity){
+        if ($product->available < $request->quantity){
             $request->session()->flash('msg', 'Product quantity is not available');
             return redirect()->back();
         }

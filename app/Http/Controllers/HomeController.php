@@ -19,6 +19,7 @@ class HomeController extends Controller
                     ->limit(5)
                     ->get();
         $bestSales = DB::table('view_product')
+                        ->where('status', '!=',5)
                         ->orderBy('sold', 'desc')
                         ->limit(5)
                         ->get();
@@ -32,6 +33,7 @@ class HomeController extends Controller
             }
         }
         $newProducts = DB::table('view_product')
+                        ->where('status', '!=',5)
                         ->orderBy('added', 'desc')
                         ->limit(5)
                         ->get();
@@ -94,7 +96,11 @@ class HomeController extends Controller
     {
         $product = DB::table('view_product')
                         ->where('id', $id)
+                        ->where('status', '!=', 5)
                         ->first();
+        if($product == null){
+            return redirect()->route('home.index');
+        }
         if ($product->discount > 0){
             $product->dis_price = $product->sell_price - ($product->sell_price * $product->discount /100);
         }
