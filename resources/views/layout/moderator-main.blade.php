@@ -38,7 +38,6 @@
                     <li class="dropdown" id="account-dropdown">
                         <a href="#" data-toggle="dropdown">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="account-dropdown-menu">
-                            {{--<li><a href="#">Your store</a></li>--}}
                             <li><a href="{{route('admin.profile')}}">Profile</a></li>
                             <li><a href="{{route('admin.password')}}">Change password</a></li>
                         </ul>
@@ -66,15 +65,6 @@
                         <li><a href="{{route('information.cancelled')}}">Cancelled</a></li>
                         <li class="active"><a href="{{route('information.index')}}">Orders</a></li>
                     </ul>
-
-                    {{--<li  data-toggle="collapse" data-target="#report" class="collapsed active">--}}
-                        {{--<a href="#"><i class="fa fa-gift fa-lg"></i> Best sales<span class="arrow"></span></a>--}}
-                    {{--</li>--}}
-                    {{--<ul class="sub-menu collapse" id="report">--}}
-                        {{--<li class="active"><a href="/admin/orders">Product</a></li>--}}
-                        {{--<li><a href="#">Category</a></li>--}}
-                        {{--<li><a href="#">Company</a></li>--}}
-                    {{--</ul>--}}
                     <li><a href="{{route('product.index')}}">Products</a></li>
                     <li><a href="{{route('category.index')}}">Categories</a></li>
                     <li><a href="{{route('company.index')}}">Company</a></li>
