@@ -38,7 +38,7 @@
                     <li class="dropdown" id="account-dropdown">
                         <a href="#" data-toggle="dropdown">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="account-dropdown-menu">
-                            <li><a href="#">Your store</a></li>
+                            {{--<li><a href="#">Your store</a></li>--}}
                             <li><a href="{{route('admin.profile')}}">Profile</a></li>
                             <li><a href="{{route('admin.password')}}">Change password</a></li>
                         </ul>

@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          =>  'required',
+            'name'          =>  'required | unique:tbl_product,name',
             'totalPrice'    =>  'bail | required | numeric',
             'price'         =>  'bail | required | numeric',
             'quantity'      =>  'bail | required | numeric | min:1',

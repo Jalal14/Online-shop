@@ -68,4 +68,8 @@ $(document).ready(function() {
         var output = document.getElementById('admin-photo');
         output.src = URL.createObjectURL(event.target.files[0]);
     });
+    $('#company-logo-upload').change(function (event) {
+        var output = document.getElementById('company-logo-show');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    });
 });

@@ -43,7 +43,7 @@
                                     @if($transaction->type == 1)
                                         <a href="{{route('information.process', [$transaction->invoice])}}">View</a>
                                     @else
-                                        <a href="{{route('information.editBuyHistory', [$transaction->buy_id, $transaction->id])}}">View</a>
+                                        <a href="{{route('information.editBuyHistory', [$transaction->buy_id])}}">View</a>
                                     @endif
                                 </td>
                             </tr>

@@ -93,10 +93,10 @@ Route::group(['middleware' => ['modSess']], function () {
     Route::post('/product/{id}/edit', 'ProductController@update');
     Route::get('/product/{id}/add-quantity', 'ProductController@addQuantity')->name('product.addQuantity');
     Route::post('/product/{id}/add-quantity', 'ProductController@storeQuantity');
-    Route::get('/details/{id}', 'ProductController@deleteDetails')->name('product.deleteDetails');
-    Route::post('/details/{id}', 'ProductController@destroyDetails');
-    Route::get('/specification/{id}', 'ProductController@deleteSpecification')->name('product.deleteSpecification');
-    Route::post('/specification/{id}', 'ProductController@destroySpecification');
+//    Route::get('/details/{id}', 'ProductController@deleteDetails')->name('product.deleteDetails');
+//    Route::post('/details/{id}', 'ProductController@destroyDetails');
+//    Route::get('/specification/{id}', 'ProductController@deleteSpecification')->name('product.deleteSpecification');
+//    Route::post('/specification/{id}', 'ProductController@destroySpecification');
 
     Route::get('/status', 'StatusController@index')->name('status.index');
     Route::get('/status/create', 'StatusController@create')->name('status.create');
@@ -126,8 +126,8 @@ Route::group(['middleware' => ['modSess']], function () {
         Route::get('/employee', 'AdminController@all')->name('admin.all');
 
         Route::get('/buy-history', 'InformationController@buyHistory')->name('information.buyHistory');
-        Route::get('/buy-history/{transaction}/{buy}/edit', 'InformationController@editBuyHistory')->name('information.editBuyHistory');
-        Route::post('/buy-history/{transaction}/{id}/edit', 'InformationController@updateBuyHistory');
+        Route::get('/buy-history/{buy}/edit', 'InformationController@editBuyHistory')->name('information.editBuyHistory');
+        Route::post('/buy-history/{buy}/edit', 'InformationController@updateBuyHistory');
 
         Route::get('/transactions', 'InformationController@transactions')->name('information.transaction');
     });

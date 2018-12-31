@@ -8,7 +8,7 @@
     <div id="main">
         <div class="page-header">
             <div class="container-fluid">
-                <h1>Products</h1>
+                <h1><a href="{{route('product.show', [$product->id])}}">{{$product->name}}</a></h1>
             </div>
         </div>
         <div class="container-fluid">
@@ -100,61 +100,100 @@
                                 <div class="heading">
                                     <h3>Product details</h3>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Details</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        @forelse($details as $detail)
-                                            <tr id="details-area">
-                                                <td class="col-lg-11 col-md-11 col-sm-11"><input class="form-control" type="text" name="details[]" value="{{$detail->details}}"></td>
-                                                <td class="col-lg-1 col-md-1 col-sm-1"><a href="{{route('product.deleteDetails', [$detail->id])}}"><button type="button" class="btn btn-danger">Delete</button></a> </td>
-                                            </tr>
-                                        @empty
-                                            <tr id="details-area">
-                                                <td></td>
-                                                <td><input class="form-control" type="text" name="details[]"></td>
-                                            </tr>
-                                        @endforelse
-                                        <tr>
-                                            <td></td>
-                                            <td><input type="button" class="add-details-button btn btn-success pull-right" value="Add new field"></td>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                                <div class="details-wrapper">
+                                    @forelse($details as $detail)
+                                        <div class="form-group row details-area">
+                                            <div class="col-md-9 col-sm-9">
+                                                <input type="text" class="form-control details-text" name="details[]" value="{{$detail->details}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="button" class="remove-details btn btn-danger" value="Remove">
+                                            </div>
+                                        </div>
+                                    @empty
+                                    @endforelse
                                 </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type="button" class="add-details btn btn-success pull-right" value="Add new field">
+                                    </div>
+                                </div>
+                                {{--<div class="table-responsive">--}}
+                                    {{--<table class="table">--}}
+                                        {{--<thead>--}}
+                                        {{--<tr>--}}
+                                            {{--<th>Details</th>--}}
+                                            {{--<th>Action</th>--}}
+                                        {{--</tr>--}}
+                                        {{--@forelse($details as $detail)--}}
+                                            {{--<tr id="details-area">--}}
+                                                {{--<td class="col-lg-11 col-md-11 col-sm-11"><input class="form-control" type="text" name="details[]" value="{{$detail->details}}"></td>--}}
+                                                {{--<td class="col-lg-1 col-md-1 col-sm-1"><a href="{{route('product.deleteDetails', [$detail->id])}}"><button type="button" class="btn btn-danger">Delete</button></a> </td>--}}
+                                            {{--</tr>--}}
+                                        {{--@empty--}}
+                                            {{--<tr id="details-area">--}}
+                                                {{--<td></td>--}}
+                                                {{--<td><input class="form-control" type="text" name="details[]"></td>--}}
+                                            {{--</tr>--}}
+                                        {{--@endforelse--}}
+                                        {{--<tr>--}}
+                                            {{--<td></td>--}}
+                                            {{--<td><input type="button" class="add-details-button btn btn-success pull-right" value="Add new field"></td>--}}
+                                        {{--</tr>--}}
+                                        {{--</thead>--}}
+                                    {{--</table>--}}
+                                {{--</div>--}}
                                 <div class="heading">
                                     <h3>Product specification</h3>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        @forelse($specifications as $specification)
-                                            <tr id="specification-area">
-                                                <td class="col-lg-3 col-md-3 col-sm-3"><input class="form-control" type="text" name="specTitle[]" value="{{$specification->title}}"></td>
-                                                <td class="col-lg-8 col-md-8 col-sm-8"><input class="form-control" type="text" name="specDesc[]" value="{{$specification->specification}}"></td>
-                                                <td class="col-lg-1 col-md-1 col-sm-1"><a href="{{route('product.deleteSpecification', [$specification->id])}}"><button type="button" class="btn btn-danger">Delete</button></a> </td>
-                                            </tr>
-                                        @empty
-                                            <tr id="specification-area">
-                                                <td><input class="form-control" type="text" name="specTitle[]"></td>
-                                                <td><input class="form-control" type="text" name="specDesc[]"></td>
-                                            </tr>
-                                        @endforelse
-                                        <tr>
-                                            <td></td>
-                                            <td><input type="button" class="add-specification-button btn btn-success" value="Add new field"></td>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                                <div class="specification-wrapper">
+                                    @forelse($specifications as $specification)
+                                        <div class="form-group row specification-area">
+                                            <div class="col-md-3 col-sm-3">
+                                                <input type="text" class="form-control specification-text" name="specTitle[]" placeholder="Title" value="{{$specification->title}}">
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <input type="text" class="form-control specification-text" name="specDesc[]" placeholder="Description" value="{{$specification->specification}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="button" class="remove-specification btn btn-danger" value="Remove">
+                                            </div>
+                                        </div>
+                                    @empty
+                                    @endforelse
                                 </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9 col-md-9 col-sm-9">
+                                        <input type="button" class="add-specification btn btn-success pull-right" value="Add new field">
+                                    </div>
+                                </div>
+                                {{--<div class="table-responsive">--}}
+                                    {{--<table class="table">--}}
+                                        {{--<thead>--}}
+                                        {{--<tr>--}}
+                                            {{--<th>Title</th>--}}
+                                            {{--<th>Description</th>--}}
+                                            {{--<th>Action</th>--}}
+                                        {{--</tr>--}}
+                                        {{--@forelse($specifications as $specification)--}}
+                                            {{--<tr id="specification-area">--}}
+                                                {{--<td class="col-lg-3 col-md-3 col-sm-3"><input class="form-control" type="text" name="specTitle[]" value="{{$specification->title}}"></td>--}}
+                                                {{--<td class="col-lg-8 col-md-8 col-sm-8"><input class="form-control" type="text" name="specDesc[]" value="{{$specification->specification}}"></td>--}}
+                                                {{--<td class="col-lg-1 col-md-1 col-sm-1"><a href="{{route('product.deleteSpecification', [$specification->id])}}"><button type="button" class="btn btn-danger">Delete</button></a> </td>--}}
+                                            {{--</tr>--}}
+                                        {{--@empty--}}
+                                            {{--<tr id="specification-area">--}}
+                                                {{--<td><input class="form-control" type="text" name="specTitle[]"></td>--}}
+                                                {{--<td><input class="form-control" type="text" name="specDesc[]"></td>--}}
+                                            {{--</tr>--}}
+                                        {{--@endforelse--}}
+                                        {{--<tr>--}}
+                                            {{--<td></td>--}}
+                                            {{--<td><input type="button" class="add-specification-button btn btn-success" value="Add new field"></td>--}}
+                                        {{--</tr>--}}
+                                        {{--</thead>--}}
+                                    {{--</table>--}}
+                                {{--</div>--}}
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12 col-sm-12">

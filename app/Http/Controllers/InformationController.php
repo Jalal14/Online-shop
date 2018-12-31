@@ -177,11 +177,16 @@ class InformationController extends Controller
                 ->with('companyList', $companyList)
                 ->with('historyList', $historyList);
     }
-    public function editBuyHistory($transacion, $buy, Request $request)
+    public function editBuyHistory($buy, Request $request)
     {
         $history = DB::table('view_buy_history')
                     ->where('id', $buy)
                     ->first();
+        if ($history->updated != null){
+            $update_emp = Admin::find($history->update_emp);
+            $history->update_uname = $update_emp->uname;
+            $history->update_email = $update_emp->email;
+        }
         return view('admin.update-buy-history')
                 ->with('history', $history);
     }
@@ -189,15 +194,22 @@ class InformationController extends Controller
     {
         $this->validate($request, [
             'total' => 'bail | required | numeric | min:0',
-            'price' => 'bail | required | numeric | min:0',
+//            'price' => 'bail | required | numeric | min:0',
         ]);
+        $transaction = Transaction::where('buy_id', $request->id)
+            ->first();
+        $transaction->amount = $request->total;
+        $transaction->tr_date = date('Y-m-d');
+        $transaction->type = 2;
+        $transaction->acc_by = $request->session()->get('loggedMod');
+        $transaction->save();
         $history = BuyHistory::find($request->id);
         $history->total_price = $request->total;
-        $history->sell_price = $request->price;
+//        $history->sell_price = $request->price;
         $history->updated = date('Y-m-d');
         $history->update_emp = $request->session()->get('loggedAdmin');
         $history->save();
-        return redirect()->route('information.buyHistory');
+        return redirect()->route('information.transaction');
     }
     public function transactions(Request $request)
     {

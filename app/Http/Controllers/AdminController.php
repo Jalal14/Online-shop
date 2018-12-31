@@ -8,6 +8,7 @@ use App\Http\Requests\AdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Admin;
 use App\Gender;
 use App\Status;
@@ -59,11 +60,19 @@ class AdminController extends Controller
         $admin->join_date = date('Y-m-d');
         $admin->role = $request->role;
         $admin->status = $request->status;
-        $file = $request->file('photo');
-        $fileName = $admin->uname.".".$file->getClientOriginalExtension();
-        $admin->photo = 'admin/'.$fileName;
+        $image = $request->file('photo');
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(350, 350);
+        $imageName = $admin->uname.".".$image->getClientOriginalExtension();
+        $admin->photo = 'admin/'.$imageName;
+
+//        $file = $request->file('photo');
+//        $fileName = $admin->uname.".".$file->getClientOriginalExtension();
+//        $admin->photo = 'admin/'.$fileName;
         if ($admin->save() == 1) {
-            $file->move('images/admin', $fileName);
+//            $file->move('images/admin', $fileName);
+            $image_resize->save(public_path('images/admin/'
+                .$imageName));
         }
         return redirect()->route('admin.all');
     }
@@ -97,13 +106,6 @@ class AdminController extends Controller
         $admin->save();
         return redirect()->route('admin.all');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Admin $admin)
     {
         //
@@ -136,10 +138,18 @@ class AdminController extends Controller
         $admin->dob = $request->dob;
         $admin->address = $request->address;
         if ($request->file('photo') != null){
-            $file = $request->file('photo');
-            $fileName = $admin->uname.".".$file->getClientOriginalExtension();
-            $admin->photo = 'admin/'.$fileName;
-            $file->move('images/admin', $fileName);
+            $image = $request->file('photo');
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->resize(350, 350);
+            $imageName = $admin->uname.".".$image->getClientOriginalExtension();
+            $image_resize->save(public_path('images/admin/'
+                .$imageName));
+            $admin->photo = 'admin/'.$imageName;
+
+//            $file = $request->file('photo');
+//            $fileName = $admin->uname.".".$file->getClientOriginalExtension();
+//            $admin->photo = 'admin/'.$fileName;
+//            $file->move('images/admin', $fileName);
         }
         $admin->save();
         return redirect()->route('admin.profile');

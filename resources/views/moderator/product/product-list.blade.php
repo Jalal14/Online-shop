@@ -32,10 +32,10 @@
                                 <th>Image</th>
                                 <th>Name (Update)</th>
                                 <th>Price</th>
-                                <th>Discount</th>
-                                <th>Available</th>
+                                <th>Off</th>
+                                <th>Avl</th>
                                 <th>Sold</th>
-                                <th>Add date</th>
+                                <th>Add</th>
                                 <th>Category</th>
                                 <th>Company</th>
                                 <th>Status</th>
@@ -45,7 +45,10 @@
                                 <tr>
                                     <td>{{$product->id}}</td>
                                     <td><img src="{{asset('images')}}/{{$product->image}}" class="image-content" alt="{{$product->name}}"></td>
-                                    <td><label><a href="{{route('product.show', [$product->id])}}">{{$product->name}}</a></label></td>
+{{--                                    <td><label><a href="{{route('product.show', [$product->id])}}">{{$product->name}}</a></label></td>--}}
+                                    <td><label><a href="{{route('product.show', [$product->id])}}">{{$product->name}}</a></label>
+                                        <br><br><label><a href="{{route('product.edit', [$product->id])}}">[Update]</a></label>
+                                    </td>
                                     <td>{{$product->sell_price}}</td>
                                     <td>{{$product->discount}}%</td>
                                     <td>{{$product->available}}</td>
@@ -54,7 +57,7 @@
                                     <td>{{$product->category_name}}</td>
                                     <td>{{$product->company_name}}</td>
                                     <td>{{$product->status_name}}</td>
-                                    <td><a href="{{route('product.addQuantity', [$product->id])}}">Add quantity</a> | <a href="{{route('product.edit', [$product->id])}}">Update</a>
+                                    <td><a href="{{route('product.addQuantity', [$product->id])}}">Add quantity</a> <!-- | <a href="{{route('product.edit', [$product->id])}}">Update</a> -->
                                         {{--@if(session()->has('loggedAdmin'))--}}
                                             {{--<br><a href="#">Delete</a>--}}
                                         {{--@endif--}}
