@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Product;
 use App\Company;
 use App\Category;
@@ -9,10 +14,7 @@ use App\Status;
 use App\BuyHistory;
 use App\Details;
 use App\Specifications;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use App\Http\Requests\ProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Transaction;
 
 class ProductController extends Controller
 {
@@ -20,7 +22,7 @@ class ProductController extends Controller
     {
         $categoryList = Category::all();
         $companyList = Company::all();
-        $productList = DB::table('view_product')->get();
+        $productList = DB::table('view_product')->paginate(10);
         return view('moderator.product.product-list')
                 ->with('productList', $productList)
                 ->with('categoryList', $categoryList)
@@ -53,12 +55,14 @@ class ProductController extends Controller
         $product->sold = 0;
         $product->status = $request->status;
         $product->discount = $request->discount;
-        $product->adder = date('Y-m-d');
+        $product->added = date('Y-m-d');
         if ($product->save() == 1) {
-            $file = $request->file('image');
-            $fileName = $product->id.".".$file->getClientOriginalExtension();
-            $product->image = 'products/'.$fileName;
-            $file->move('images/products', $fileName);
+            $image = $request->file('image');
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->resize(250, 250);
+            $imageName = $product->id.".".$image->getClientOriginalExtension();
+            $image_resize->save(public_path('images/products/'.$imageName));
+            $product->image = 'products/'.$imageName;
             $product->save();
         }
         foreach ($request->details as $detail){
@@ -78,7 +82,15 @@ class ProductController extends Controller
         $buyHistory->buy_date = date('Y-m-d');
         $buyHistory->employee = $request->session()->get('loggedMod');
         $buyHistory->save();
-        return redirect()->route('product.index');
+        $transaction = new Transaction();
+        $transaction->amount = $buyHistory->total_price;
+        $transaction->tr_date = $buyHistory->buy_date;
+        $transaction->type = 2;
+        $transaction->acc_by = $buyHistory->employee;
+        $transaction->buy_id = $buyHistory->id;
+        $transaction->save();
+        return redirect()->route('product.show', [$product->id]);
+//        return redirect()->route('product.index');
     }
 
     public function show($id, Product $product)
@@ -93,7 +105,7 @@ class ProductController extends Controller
                             ->get();
         $specifications = Specifications::where('product', $product->id)
                                             ->get();
-        return view('moderator.product.delete-product')
+        return view('moderator.product.show-product')
             ->with('product', $product)
             ->with('details', $details)
             ->with('specifications', $specifications);
@@ -132,35 +144,36 @@ class ProductController extends Controller
         $product->category = $request->category;
         $product->company = $request->company;
         $product->status = $request->status;
-        if ($request->file('image') != null){
-            $file = $request->file('image');
-            $fileName = $product->id.".".$file->getClientOriginalExtension();
-            $product->image = 'products/'.$fileName;
-            $file->move('images/products', $fileName);
+        if ($request->file('image') != null) {
+            $image = $request->file('image');
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->resize(250, 250);
+            $imageName = $product->id . "." . $image->getClientOriginalExtension();
+            $image_resize->save(public_path('images/products/' . $imageName));
+            $product->image = 'products/' . $imageName;
+            $product->save();
         }
         $product->save();
         Details::where('product', $product->id)
-                ->delete();
+            ->delete();
         Specifications::where('product', $product->id)
-                ->delete();
-        foreach ($request->details as $detail){
-            $details[] = ['id' => null, 'product' => $product->id, 'details' => $detail ];
+            ->delete();
+        if ($request->details != null) {
+            foreach ($request->details as $detail) {
+                $details[] = ['id' => null, 'product' => $product->id, 'details' => $detail];
+            }
+            DB::table('tbl_details')->insert($details);
         }
-        DB::table('tbl_details')->insert($details);
-        $index = 0;
-        foreach ($request->specTitle as $specTitle){
-            $specifications[] = ['id' => null, 'product' => $product->id, 'title' => $specTitle, 'specification' => $request->specDesc[$index++] ];
+        if ($request->specTitle != null){
+            $index = 0;
+            foreach ($request->specTitle as $specTitle) {
+                $specifications[] = ['id' => null, 'product' => $product->id, 'title' => $specTitle, 'specification' => $request->specDesc[$index++]];
+            }
+            DB::table('tbl_specification')->insert($specifications);
         }
-        DB::table('tbl_specification')->insert($specifications);
-        return redirect()->route('product.index');
+        return redirect()->route('product.show', [$product->id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
         //
@@ -191,38 +204,46 @@ class ProductController extends Controller
         $buyHistory->buy_date = date('Y-m-d');
         $buyHistory->employee = $request->session()->get('loggedMod');
         $buyHistory->save();
+        $transaction = new Transaction();
+        $transaction->amount = $buyHistory->total_price;
+        $transaction->tr_date = $buyHistory->buy_date;
+        $transaction->type = 2;
+        $transaction->acc_by = $buyHistory->employee;
+        $transaction->buy_id = $buyHistory->id;
+        $transaction->save();
+
         return redirect()->route('product.index');
     }
-    public function deleteDetails($id, Request $request)
-    {
-        $details = Details::find($id);
-        $product = DB::table('view_product')
-                    ->where('id', $details->product)
-                    ->first();
-        return view('moderator.product.delete-details')
-                ->with('details', $details)
-                ->with('product', $product);
-    }
-    public function destroyDetails(Request $request)
-    {
-        $detail = Details::find($request->id);
-        $detail->delete();
-        return redirect()->route('product.show', [$request->product]);
-    }
-    public function deleteSpecification($id, Request $request)
-    {
-        $specification = Specifications::find($id);
-        $product = DB::table('view_product')
-                    ->where('id', $specification->product)
-                    ->first();
-        return view('moderator.product.delete-specification')
-                ->with('specification', $specification)
-                ->with('product', $product);
-    }
-    public function destroySpecification(Request $request)
-    {
-        $specification = Specifications::find($request->id);
-        $specification->delete();
-        return redirect()->route('product.show', [$request->product]);
-    }
+//    public function deleteDetails($id, Request $request)
+//    {
+//        $details = Details::find($id);
+//        $product = DB::table('view_product')
+//                    ->where('id', $details->product)
+//                    ->first();
+//        return view('moderator.product.delete-details')
+//                ->with('details', $details)
+//                ->with('product', $product);
+//    }
+//    public function destroyDetails(Request $request)
+//    {
+//        $detail = Details::find($request->id);
+//        $detail->delete();
+//        return redirect()->route('product.show', [$request->product]);
+//    }
+//    public function deleteSpecification($id, Request $request)
+//    {
+//        $specification = Specifications::find($id);
+//        $product = DB::table('view_product')
+//                    ->where('id', $specification->product)
+//                    ->first();
+//        return view('moderator.product.delete-specification')
+//                ->with('specification', $specification)
+//                ->with('product', $product);
+//    }
+//    public function destroySpecification(Request $request)
+//    {
+//        $specification = Specifications::find($request->id);
+//        $specification->delete();
+//        return redirect()->route('product.show', [$request->product]);
+//    }
 }

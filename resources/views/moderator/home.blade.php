@@ -17,47 +17,47 @@
                     <div class="tile tile-primary">
                         <div class="tile-heading">CURRENT ORDERS</div>
                         <div class="tile-body">
-                            <span><img src="{{asset('images')}}/admin/shopping-trolley.png"></span>
-                            <h2 class="pull-right">2</h2>
+                            <a href="{{route('information.orders')}}"><span><img src="{{asset('images')}}/admin/shopping-trolley.png"></span></a>
+                            <h2 class="pull-right">{{$currentOrders}}</h2>
                         </div>
                         <div class="tile-footer">
-                            <a href="/admin/orders">View more.....</a>
+                            <a href="{{route('information.orders')}}">View more.....</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6" class="activity-banner">
                     <div class="tile tile-primary">
-                        <div class="tile-heading">TOTAL ORDERS</div>
+                        <div class="tile-heading">PROCESSING</div>
                         <div class="tile-body">
-                            <span><img src="{{asset('images')}}/admin/shopcartapply.png"></span>
-                            <h2 class="pull-right">2</h2>
+                            <a href="{{route('information.processing')}}"><span><img src="{{asset('images')}}/admin/processing.png"></span></a>
+                            <h2 class="pull-right">{{$totalprocessing}}</h2>
                         </div>
                         <div class="tile-footer">
-                            <a href="/admin/orders">View more.....</a>
+                            <a href="{{route('information.processing')}}">View more.....</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6" class="activity-banner">
                     <div class="tile tile-primary">
-                        <div class="tile-heading">TOTAL SALES</div>
+                        <div class="tile-heading">TOTAL DELIVERED</div>
                         <div class="tile-body">
-                            <span><img src="{{asset('images')}}/admin/user-icon.png"></span>
-                            <h2 class="pull-right">2</h2>
+                            <a href="{{route('information.delivered')}}"><span><img src="{{asset('images')}}/admin/shopcartapply.png"></span></a>
+                            <h2 class="pull-right">{{$totaldelivers}}</h2>
                         </div>
                         <div class="tile-footer">
-                            <a href="#">View more.....</a>
+                            <a href="{{route('information.delivered')}}">View more.....</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6" class="activity-banner">
                     <div class="tile tile-primary">
-                        <div class="tile-heading">TOTAL SALES</div>
+                        <div class="tile-heading">TOTAL RETURNS</div>
                         <div class="tile-body">
-                            <span><img src="{{asset('images')}}/admin/user-icon.png"></span>
-                            <h2 class="pull-right">2</h2>
+                            <a href="{{route('information.returns')}}"><span><img src="{{asset('images')}}/admin/return.png"></span></a>
+                            <h2 class="pull-right">{{$totalreturns}}</h2>
                         </div>
                         <div class="tile-footer">
-                            <a href="#">View more.....</a>
+                            <a href="{{route('information.returns')}}">View more.....</a>
                         </div>
                     </div>
                 </div>
@@ -71,23 +71,33 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Customer</th>
+                                <th>Id </th>
+                                <th>Total unit</th>
+                                <th>Total price</th>
+                                <th>Order date</th>
+                                {{--<th>Deliver date</th>--}}
                                 <th>Status</th>
-                                <th>Date</th>
-                                <th>Total</th>
                                 <th>Action</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Jalal</td>
-                                <td>Pending</td>
-                                <td>13-07-17</td>
-                                <td>120000</td>
-                                <td><a href="#">Action</a></td>
-                            </tr>
                             </thead>
+                            <tbody>
+                            @forelse($invoiceList as $invoice)
+                                <tr>
+                                    <td>{{$invoice->id}}</td>
+                                    <td>{{$invoice->quantity}}</td>
+                                    <td>{{$invoice->price}}</td>
+                                    <td>{{$invoice->order_date}}</td>
+{{--                                    <td>{{$invoice->acc_date}}</td>--}}
+                                    <td>{{$invoice->status_name}}</td>
+                                    <td><a href="{{route('information.process', [$invoice->id])}}">Process</a></td>
+                                </tr>
+                            @empty
+                            @endforelse
+                            </tbody>
                         </table>
+                    </div>
+                    <div class="pagination">
+                        {{ $invoiceList->links() }}
                     </div>
                 </div>
             </div>

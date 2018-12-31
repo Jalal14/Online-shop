@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Company;
 use App\Category;
-use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
     public function index()
     {
         $categoryList = Category::all();
-        $companyList = Company::all();
+        $companyList = Company::paginate(20);
         return view('moderator.company.company-list')
                 ->with('companyList', $companyList)
                 ->with('categoryList', $categoryList);
@@ -31,21 +32,18 @@ class CompanyController extends Controller
         $company = new Company();
         $company->name = $request->name;
         $company->save();
-        $file = $request->file('logo');
-        $fileName = $company->id.".".$file->getClientOriginalExtension();
-        $company->logo = 'company/'.$fileName;
+        $image = $request->file('logo');
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(100,100);
+        $imageName = $company->id.".".$image->getClientOriginalExtension();
+        $company->logo = 'company/'.$imageName;
         if ($company->save() == 1) {
-            $file->move('images/company', $fileName);
+            $image_resize->save(public_path('images/company'
+                .$imageName));
         }
         return redirect()->route('company.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
     public function show(Company $company)
     {
         //
@@ -68,10 +66,13 @@ class CompanyController extends Controller
         $company = Company::find($request->id);
         $company->name = $request->name;
         if ($request->files->count()!=0){
-            $file = $request->file('logo');
-            $fileName = $company->id.".".$file->getClientOriginalExtension();
-            $company->logo = 'company/'.$fileName;
-            $file->move('images/company', $fileName);
+            $image = $request->file('logo');
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->resize(100,100);
+            $imageName = $company->id.".".$image->getClientOriginalExtension();
+            $company->logo = 'company/'.$imageName;
+            $image_resize->save(public_path('images/company/'
+                .$imageName));
         }
         $company->save();
         return redirect()->route('company.index');

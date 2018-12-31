@@ -31,14 +31,14 @@
                         <span class="icon-bar"></span>
                     </button>
                 </p>
-                <a class="navbar-brand" href="#">TuringShop</a>
+                <a class="navbar-brand" href="{{route('admin.index')}}">TuringShop</a>
             </div>
             <div class="nav navbar-nav navbar-right" id="account-nav">
                 <ul class="nav navbar-nav">
                     <li class="dropdown" id="account-dropdown">
                         <a href="#" data-toggle="dropdown">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="account-dropdown-menu">
-                            <li><a href="#">Your store</a></li>
+                            {{--<li><a href="#">Your store</a></li>--}}
                             <li><a href="{{route('admin.profile')}}">Profile</a></li>
                             <li><a href="{{route('admin.password')}}">Change password</a></li>
                         </ul>
@@ -59,10 +59,12 @@
                         <a href="#"><i class="fa fa-gift fa-lg"></i> Sales <span class="arrow"></span></a>
                     </li>
                     <ul class="sub-menu collapse" id="sales">
-                        <li class="active"><a href="{{route('information.orders')}}">Orders</a></li>
-                        <li><a href="{{route('information.process')}}">Process</a></li>
+                        <li class="active"><a href="{{route('information.orders')}}">Pending</a></li>
+                        <li><a href="{{route('information.processing')}}">Processing</a></li>
                         <li><a href="{{route('information.delivered')}}">Delivered</a></li>
                         <li><a href="{{route('information.returns')}}">Returns</a></li>
+                        <li><a href="{{route('information.cancelled')}}">Cancelled</a></li>
+                        <li class="active"><a href="{{route('information.index')}}">Orders</a></li>
                     </ul>
 
                     {{--<li  data-toggle="collapse" data-target="#report" class="collapsed active">--}}
@@ -79,7 +81,8 @@
                     <li><a href="{{route('status.index')}}">Status</a></li>
                     @if(session()->has('loggedAdmin'))
                         <li><a href="{{route('admin.all')}}">Employee</a></li>
-                        <li><a href="{{route('information.buyHistory')}}">Buy history</a></li>
+{{--                        <li><a href="{{route('information.buyHistory')}}">Buy history</a></li>--}}
+                    <li><a href="{{route('information.transaction')}}">Transactions</a> </li>
                         {{--<li><a href="#">Report</a></li>--}}
                     @endif
                 </ul>

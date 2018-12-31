@@ -3,20 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Crypt;
-use App\Admin;
-use App\Gender;
-use App\Status;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\Admin;
+use App\Gender;
+use App\Status;
+use App\Invoice;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('moderator.home');
+        $currentOrders = Invoice::where('status', 6)->sum('quantity');
+        $totalprocessing = Invoice::where('status', 7)->sum('quantity');
+        $totaldelivers = Invoice::where('status', 8)->sum('quantity');
+        $totalreturns = Invoice::where('status', 9)->sum('quantity');
+        $invoicList = DB::table('view_invoice')
+            ->where('status', 6)
+            ->paginate(20);
+        return view('moderator.home')
+            ->with('currentOrders', $currentOrders)
+            ->with('totalprocessing', $totalprocessing)
+            ->with('totaldelivers', $totaldelivers)
+            ->with('totalreturns', $totalreturns)
+            ->with('invoiceList', $invoicList);
     }
 
     public function create()
@@ -46,11 +60,19 @@ class AdminController extends Controller
         $admin->join_date = date('Y-m-d');
         $admin->role = $request->role;
         $admin->status = $request->status;
-        $file = $request->file('photo');
-        $fileName = $admin->uname.".".$file->getClientOriginalExtension();
-        $admin->photo = 'admin/'.$fileName;
+        $image = $request->file('photo');
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(350, 350);
+        $imageName = $admin->uname.".".$image->getClientOriginalExtension();
+        $admin->photo = 'admin/'.$imageName;
+
+//        $file = $request->file('photo');
+//        $fileName = $admin->uname.".".$file->getClientOriginalExtension();
+//        $admin->photo = 'admin/'.$fileName;
         if ($admin->save() == 1) {
-            $file->move('images/admin', $fileName);
+//            $file->move('images/admin', $fileName);
+            $image_resize->save(public_path('images/admin/'
+                .$imageName));
         }
         return redirect()->route('admin.all');
     }
@@ -84,13 +106,6 @@ class AdminController extends Controller
         $admin->save();
         return redirect()->route('admin.all');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Admin $admin)
     {
         //
@@ -123,10 +138,18 @@ class AdminController extends Controller
         $admin->dob = $request->dob;
         $admin->address = $request->address;
         if ($request->file('photo') != null){
-            $file = $request->file('photo');
-            $fileName = $admin->uname.".".$file->getClientOriginalExtension();
-            $admin->photo = 'admin/'.$fileName;
-            $file->move('images/admin', $fileName);
+            $image = $request->file('photo');
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->resize(350, 350);
+            $imageName = $admin->uname.".".$image->getClientOriginalExtension();
+            $image_resize->save(public_path('images/admin/'
+                .$imageName));
+            $admin->photo = 'admin/'.$imageName;
+
+//            $file = $request->file('photo');
+//            $fileName = $admin->uname.".".$file->getClientOriginalExtension();
+//            $admin->photo = 'admin/'.$fileName;
+//            $file->move('images/admin', $fileName);
         }
         $admin->save();
         return redirect()->route('admin.profile');

@@ -53,7 +53,14 @@
                                     <td>{{$admin->phone1}}</td>
                                     <td>{{$admin->email}}</td>
                                     <td>{{$admin->join_date}}</td>
-                                    <td>{{$admin->role}}</td>
+                                    <td>
+                                        @if($admin->role == 0)
+                                            Admin
+                                        @else
+                                            Moderator
+                                        @endif
+
+                                    </td>
                                     <td>{{$admin->status_name}}</td>
                                     <td><a href="{{route('admin.edit', [$admin->id])}}">Update</a> | <a href="{{route('admin.show', [$admin->id])}}">Details</a></td>
                                 </tr>

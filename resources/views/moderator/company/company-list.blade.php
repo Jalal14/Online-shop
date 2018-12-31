@@ -51,6 +51,9 @@
                             </thead>
                         </table>
                     </div>
+                    <div class="pagination">
+                        {{ $companyList->links() }}
+                    </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3" id="search-area">
                     <div class="heading">

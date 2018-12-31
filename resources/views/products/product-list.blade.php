@@ -18,7 +18,7 @@
                     </div>
                     <ul class="nav nav-pills nav-stacked">
                         @forelse($topCategories as $category)
-                            <li><a  class="items" href="#">{{$category->name}}<div class="arrow"><strong>></strong></div></a></li>
+                            <li><a  class="items" href="{{route('home.productsByCategory', [$category->category])}}">{{$category->name}}<div class="arrow"><strong>></strong></div></a></li>
                         @empty
                         @endforelse
                     </ul>
@@ -126,9 +126,19 @@
                     <div class="row">
                         @foreach($products as $product)
                             <div class="col-md-2 col-sm-3 body-items">
+                                @if($product->discount > 0)
+                                    <div class="discount-section">
+                                        <div class="discount">{{$product->discount}}%</div>
+                                    </div>
+                                @endif
                                 <div class="wish-icon">
                                     @if(session()->has('loggedUser'))
-                                        <a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                                        @if(in_array($product->id, $userWishList))
+                                            <a href="{{route('wish.destroy', [$product->id])}}"><img class="img-responsive pull-right" title="Remove from wish list" src="{{asset('images')}}/wished-icon.png"></a>
+                                        @else
+                                            <a href="{{route('wish.store', [$product->id])}}"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
+                                        @endif
+                                        {{--<a href="#"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>--}}
                                     @else
                                         <a href="#" data-toggle="modal" data-target="#login-modal"><img class="img-responsive pull-right" title="Add to wish list" src="{{asset('images')}}/wish-icon.png"></a>
                                     @endif
@@ -139,10 +149,16 @@
                                 <div class="product-specification">
                                     <a href="{{route('home.productDetails', [$product->id])}}"><h4>{{$product->name}}</h4></a>
                                     <p>{{$product->details}}</p>
-                                    <div class="price"><strong>&lrm;Price: ৳{{$product->sell_price}}</strong></div>
+                                    <div class="price">
+                                        @if($product->discount > 0)
+                                            <strong>Price: ৳</strong><small>&lrm;<del>{{$product->sell_price}} </del></small><strong>{{$product->dis_price}}</strong>
+                                        @else
+                                            <strong>&lrm;Price: ৳{{$product->sell_price}}</strong>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="cart-icon">
-                                    <a href="#"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
+                                    <a href="{{route('home.productDetails', [$product->id])}}"><img class="img-responsive" title="Add to cart" src="{{asset('images')}}/add-cart-icon.png"></a>
                                 </div>
                                 <div class="details-icon pull-right">
                                     <a href="{{route('home.productDetails', [$product->id])}}"><img class="img-responsive" src="{{asset('images')}}/details-icon.png"></a>

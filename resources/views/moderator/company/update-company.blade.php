@@ -29,11 +29,11 @@
                                 </tr>
                                 <tr>
                                     <td>Logo: </td>
-                                    <td><img src="{{asset('images')}}/{{$company->logo}}" class="image-content"></td>
+                                    <td><img src="{{asset('images')}}/{{$company->logo}}" class="image-content" id="company-logo-show"></td>
                                 </tr>
                                 <tr>
                                     <td>Image: </td>
-                                    <td><input type="file" name="logo"></td>
+                                    <td><input type="file" name="logo" id="company-logo-upload"></td>
                                 </tr>
                                 </thead>
                             </table>

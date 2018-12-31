@@ -111,10 +111,10 @@
                             @foreach($companies as $company)
                                 <div class="col-md-2 col-sm-3 body-items">
                                     <div class="product-image">
-                                        <a href="#"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/{{$company->logo}}"></a>
+                                        <a href="{{route('home.productsByCompany', [$company->id])}}"><img class="img-thumbnail img-responsive" src="{{asset('images')}}/{{$company->logo}}"></a>
                                     </div>
                                     <div class="product-specification">
-                                        <a href="#"><h4><center>{{$company->name}}</center></h4></a>
+                                        <a href="{{route('home.productsByCompany', [$company->id])}}"><h4><center>{{$company->name}}</center></h4></a>
                                     </div>
                                 </div>
                             @endforeach

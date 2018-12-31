@@ -60,7 +60,13 @@
                                     </tr>
                                     <tr>
                                         <td>Role: </td>
-                                        <td><label>{{$admin->role}}</label></td>
+                                        <td>
+                                            @if($admin->role == 0)
+                                                <label>Admin</label>
+                                            @else
+                                                <label>Moderator</label>
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Status: </td>

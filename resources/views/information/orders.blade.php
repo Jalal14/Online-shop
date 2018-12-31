@@ -25,22 +25,29 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Sl </th>
-                                <th>Customer</th>
+                                <th>Id </th>
+                                <th>Total unit</th>
+                                <th>Total price</th>
+                                <th>Order date</th>
+                                <th>Deliver date</th>
                                 <th>Status</th>
-                                <th>Total</th>
-                                <th>Date</th>
                                 <th>Action</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>abc</td>
-                                <td>Pending</td>
-                                <td>500000</td>
-                                <td>17-8-17</td>
-                                <td><a href="#">Process</a></td>
-                            </tr>
                             </thead>
+                            <tbody>
+                            @forelse($invoiceList as $invoice)
+                                <tr>
+                                    <td>{{$invoice->id}}</td>
+                                    <td>{{$invoice->quantity}}</td>
+                                    <td>{{$invoice->price}}</td>
+                                    <td>{{$invoice->order_date}}</td>
+                                    <td>{{$invoice->acc_date}}</td>
+                                    <td>{{$invoice->status_name}}</td>
+                                    <td><a href="{{route('information.process', [$invoice->id])}}">Process</a></td>
+                                </tr>
+                            @empty
+                            @endforelse
+                            </tbody>
                         </table>
                     </div>
                 </div>

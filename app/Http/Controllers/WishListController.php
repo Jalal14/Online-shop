@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\WishList;
 use App\Gender;
 use App\Category;
@@ -17,15 +18,12 @@ class WishListController extends Controller
      */
     public function index(Request $request)
     {
-        $genderList = Gender::all();
-        $companyList = Company::all();
-        $categoryList = Category::all();
-        $wishList = WishList::where('customer', $request->session()->get('loggedUser'))
-                            ->get();
+        $wishList = DB::table('view_wishlist')
+                        ->where('customer', $request->session()->get('loggedUser'))
+                        ->get();
+        // $wishList = WishList::where('customer', $request->session()->get('loggedUser'))
+        //                     ->get();
         return view('users.wish-list')
-                ->with('genderList', $genderList)
-                ->with('categoryList', $categoryList)
-                ->with('companyList', $companyList)
                 ->with('wishList', $wishList);
     }
 
@@ -52,7 +50,8 @@ class WishListController extends Controller
         $wish->product = $id;
         $wish->add_date = date('Y-m-d');
         $wish->save();
-        return redirect()->route('wish.index');
+        // return redirect()->route('wish.index');
+        return redirect()->back();
     }
 
     /**
@@ -95,8 +94,11 @@ class WishListController extends Controller
      * @param  \App\WishList  $wishList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(WishList $wishList)
+    public function destroy($product, Request $request)
     {
-        //
+        Wishlist::where('customer', $request->session()->get('loggedUser'))
+            ->where('product', $product)
+            ->delete();
+        return redirect()->back();
     }
 }
