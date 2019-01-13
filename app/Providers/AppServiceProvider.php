@@ -11,6 +11,7 @@ use App\Gender;
 use App\Company;
 use App\Category;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
         View::composer(['users.*', 'public.home', 'products.*'], function ($view){
             $cartCount = 0;
             $wishCount = 0;
