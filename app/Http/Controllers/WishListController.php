@@ -18,7 +18,7 @@ class WishListController extends Controller
      */
     public function index(Request $request)
     {
-        $wishList = DB::table('view_wishlist')
+        $wishList = DB::table('view_wishlists')
                         ->where('customer', $request->session()->get('loggedUser'))
                         ->get();
         // $wishList = WishList::where('customer', $request->session()->get('loggedUser'))

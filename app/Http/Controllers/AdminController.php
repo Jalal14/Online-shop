@@ -22,7 +22,7 @@ class AdminController extends Controller
         $totalprocessing = Invoice::where('status', 7)->sum('quantity');
         $totaldelivers = Invoice::where('status', 8)->sum('quantity');
         $totalreturns = Invoice::where('status', 9)->sum('quantity');
-        $invoicList = DB::table('view_invoice')
+        $invoicList = DB::table('view_invoices')
             ->where('status', 6)
             ->paginate(20);
         return view('moderator.home')
@@ -79,7 +79,7 @@ class AdminController extends Controller
 
     public function show($id, Request $request)
     {
-        $admin = DB::table('view_admin')
+        $admin = DB::table('view_admins')
                 ->where('id', $id)
                 ->first();
         return view('admin.employee.delete-employee')
@@ -113,7 +113,7 @@ class AdminController extends Controller
 
     public function all(Request $request)
     {
-        $adminList = DB::table('view_admin')->get();
+        $adminList = DB::table('view_admins')->get();
         return view('admin.employee.employee-list')
             ->with('adminList', $adminList);
     }

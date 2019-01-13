@@ -16,7 +16,7 @@ class UserAjaxController extends Controller
     {
         $user = User::where('email', $request->email)
                         ->first();
-        if ($user != null && Crypt::decryptString($user->password) == $request->password){
+        if ($user != null && json_decode(Crypt::decryptString($user->password)) == (string)$request->password){
             $request->session()->put('loggedUser', $user->id);
             return 1;
         }else{
@@ -43,7 +43,7 @@ class UserAjaxController extends Controller
         $regReq->email = $request->email;
         $regReq->phone = $request->phone;
         $regReq->address = $request->address;
-        $regReq->password = Crypt::encryptString($request->password);
+        $regReq->password = Crypt::encryptString(json_encode($request->password));
         if ($regReq->save() == 1) {
             $token = new RegistrationToken();
             $token->email = $regReq->email;

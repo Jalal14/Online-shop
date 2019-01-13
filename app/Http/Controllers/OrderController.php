@@ -25,7 +25,7 @@ class OrderController extends Controller
     public function order(Request $request)
     {
         $user = User::find($request->session()->get('loggedUser'));
-        $cartList = DB::table('view_cart')
+        $cartList = DB::table('view_carts')
             ->where('customer', $user->id)
             ->get();
         $cartQnt = $cartList->sum('quantity');
@@ -77,7 +77,7 @@ class OrderController extends Controller
     }
     public function userOrders($order, Request $request)
     {
-        $orderList = DB::table('view_order')
+        $orderList = DB::table('view_orders')
             ->where('customer', $request->session()->get('loggedUser'))
             ->where('invoice_id', $order)
             ->get();

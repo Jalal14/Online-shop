@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    protected $table = 'tbl_cart';
+    protected $table = 'tbl_carts';
     public $timestamps = false;
 }

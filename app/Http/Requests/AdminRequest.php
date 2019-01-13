@@ -26,7 +26,7 @@ class AdminRequest extends FormRequest
         return [
             'uname'     =>  'required',
             'name'      =>  'bail | required',
-            'email'     =>  'bail | required | email | unique:tbl_admin,email',
+            'email'     =>  'bail | required | email | unique:tbl_admins,email',
             'pass'      =>  'required',
             'cPass'     =>  'same:pass',
             'contact1'  =>  'required',

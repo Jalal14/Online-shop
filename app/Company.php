@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $table = 'tbl_company';
+    protected $table = 'tbl_companies';
     public $timestamps = false;
 }

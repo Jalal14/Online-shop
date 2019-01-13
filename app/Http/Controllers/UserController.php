@@ -32,7 +32,7 @@ class UserController extends Controller
 //        $companyList = Company::all();
 //        $categoryList = Category::all();
         $user = User::find($request->session()->get('loggedUser'));
-        $invoiceList = DB::table('view_invoice')
+        $invoiceList = DB::table('view_invoices')
             ->where('customer', $user->id)
             ->get();
         return view('users.profile')
@@ -71,8 +71,8 @@ class UserController extends Controller
             'confirmNewPassword'=>  'same:newPassword'
         ]);
         $user = User::find($request->session()->get('loggedUser'));
-        if (Crypt::decryptString($user->password) == $request->currentPassword){
-            $user->password = Crypt::encryptString($request->newPassword);
+        if (json_decode(Crypt::decryptString($user->password)) == $request->currentPassword){
+            $user->password = Crypt::encryptString(json_encode($request->newPassword));
             $user->save();
             $request->session()->flash('msg', 'Password updated.');
         }else{

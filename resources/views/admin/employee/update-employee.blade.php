@@ -43,12 +43,12 @@
                                     <td>Role: </td>
                                     <td>
                                         <select name="role" class="form-control">
-                                            @if($admin->role == 'Admin')
-                                                <option value="Admin" selected>Admin</option>
-                                                <option value="Moderator">Moderator</option>
+                                            @if($admin->role == 0)
+                                                <option value="0" selected>Admin</option>
+                                                <option value="1">Moderator</option>
                                             @else
-                                                <option value="Moderator" selected>Moderator</option>
-                                                <option value="Admin">Admin</option>
+                                                <option value="1" selected>Moderator</option>
+                                                <option value="0">Admin</option>
                                             @endif
                                         </select>
                                     </td>

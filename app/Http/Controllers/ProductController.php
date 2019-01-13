@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         $categoryList = Category::all();
         $companyList = Company::all();
-        $productList = DB::table('view_product')->paginate(10);
+        $productList = DB::table('view_products')->paginate(10);
         return view('moderator.product.product-list')
                 ->with('productList', $productList)
                 ->with('categoryList', $categoryList)
@@ -73,7 +73,7 @@ class ProductController extends Controller
         foreach ($request->specTitle as $specTitle){
             $specifications[] = ['id' => null, 'product' => $product->id, 'title' => $specTitle, 'specification' => $request->specDesc[$index++] ];
         }
-        DB::table('tbl_specification')->insert($specifications);
+        DB::table('tbl_specifications')->insert($specifications);
         $buyHistory = new BuyHistory();
         $buyHistory->product = $product->id;
         $buyHistory->quantity = $request->quantity;
@@ -90,12 +90,11 @@ class ProductController extends Controller
         $transaction->buy_id = $buyHistory->id;
         $transaction->save();
         return redirect()->route('product.show', [$product->id]);
-//        return redirect()->route('product.index');
     }
 
     public function show($id, Product $product)
     {
-        $product = DB::table('view_product')
+        $product = DB::table('view_products')
             ->where('id', $id)
             ->first();
         if ($product->discount > 0){
@@ -123,7 +122,7 @@ class ProductController extends Controller
         $details = DB::table('tbl_details')
                     ->where('product', $id)
                     ->get();
-        $specifications = DB::table('tbl_specification')
+        $specifications = DB::table('tbl_specifications')
                     ->where('product', $id)
                     ->get();
         return view('moderator.product.update-product')
@@ -169,7 +168,7 @@ class ProductController extends Controller
             foreach ($request->specTitle as $specTitle) {
                 $specifications[] = ['id' => null, 'product' => $product->id, 'title' => $specTitle, 'specification' => $request->specDesc[$index++]];
             }
-            DB::table('tbl_specification')->insert($specifications);
+            DB::table('tbl_specifications')->insert($specifications);
         }
         return redirect()->route('product.show', [$product->id]);
     }
@@ -180,7 +179,7 @@ class ProductController extends Controller
     }
     public function addQuantity($id, Request $request)
     {
-        $product = DB::table('view_product')
+        $product = DB::table('view_products')
                     ->where('id', $id)
                     ->first();
         return view('moderator.product.add-quantity')
@@ -217,7 +216,7 @@ class ProductController extends Controller
 //    public function deleteDetails($id, Request $request)
 //    {
 //        $details = Details::find($id);
-//        $product = DB::table('view_product')
+//        $product = DB::table('view_products')
 //                    ->where('id', $details->product)
 //                    ->first();
 //        return view('moderator.product.delete-details')
@@ -233,7 +232,7 @@ class ProductController extends Controller
 //    public function deleteSpecification($id, Request $request)
 //    {
 //        $specification = Specifications::find($id);
-//        $product = DB::table('view_product')
+//        $product = DB::table('view_products')
 //                    ->where('id', $specification->product)
 //                    ->first();
 //        return view('moderator.product.delete-specification')

@@ -26,7 +26,7 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'bail | required | unique:tbl_company,name',
+            'name' => 'bail | required | unique:tbl_companies,name',
             'logo'     => 'bail|required|image|mimes:jpeg,png'
         ]);
         $company = new Company();

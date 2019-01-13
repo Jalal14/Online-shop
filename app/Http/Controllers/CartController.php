@@ -11,7 +11,7 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        $cartList = DB::table('view_cart')
+        $cartList = DB::table('view_carts')
             ->where('customer', $request->session()->get('loggedUser'))->get();
         $grand_total = 0;
         if(count($cartList) > 0){

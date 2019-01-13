@@ -25,7 +25,7 @@ class UserProfileRequest extends FormRequest
     {
         return [
             'name'          =>  'required',
-            'email'      =>  'bail | required | email | unique:tbl_user,email',
+            'email'      =>  'bail | required | email | unique:tbl_users,email',
             'phone'         =>  'required',
             'address'       =>  'required'
         ];

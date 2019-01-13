@@ -18,13 +18,13 @@ class InformationController extends Controller
 {
     public function index(Request $request)
     {
-        $invoiceList = DB::table('view_invoice')->get();
+        $invoiceList = DB::table('view_invoices')->get();
         return view('information.orders')
             ->with('invoiceList', $invoiceList);
     }
     public function orders(Request $request)
     {
-        $invoiceList = DB::table('view_invoice')
+        $invoiceList = DB::table('view_invoices')
             ->where('status', 6)
             ->get();
         return view('information.orders')
@@ -32,7 +32,7 @@ class InformationController extends Controller
     }
     public function processing(Request $request)
     {
-        $invoiceList = DB::table('view_invoice')
+        $invoiceList = DB::table('view_invoices')
             ->where('status', 7)
             ->get();
         return view('information.orders')
@@ -40,7 +40,7 @@ class InformationController extends Controller
     }
     public function delivered(Request $request)
     {
-        $invoiceList = DB::table('view_invoice')
+        $invoiceList = DB::table('view_invoices')
             ->where('status', 8)
             ->get();
         return view('information.orders')
@@ -48,7 +48,7 @@ class InformationController extends Controller
     }
     public function returns(Request $request)
     {
-        $invoiceList = DB::table('view_invoice')
+        $invoiceList = DB::table('view_invoices')
             ->where('status', 9)
             ->get();
         return view('information.orders')
@@ -56,7 +56,7 @@ class InformationController extends Controller
     }
     public function cancelled(Request $request)
     {
-        $invoiceList = DB::table('view_invoice')
+        $invoiceList = DB::table('view_invoices')
             ->where('status', 10)
             ->get();
         return view('information.orders')
@@ -64,11 +64,11 @@ class InformationController extends Controller
     }
     public function process($order, Request $request)
     {
-        $orderList = DB::table('view_order')
+        $orderList = DB::table('view_orders')
             ->where('invoice_id', $order)
             ->get();
         $grandTotal = $orderList->sum('total');
-        $invoice = DB::table('view_invoice')
+        $invoice = DB::table('view_invoices')
             ->where('id', $order)
             ->first();
         if ($invoice->status == 9){
@@ -123,11 +123,11 @@ class InformationController extends Controller
     }
     public function returnCreate($order, Request $request)
     {
-        $orderList = DB::table('view_order')
+        $orderList = DB::table('view_orders')
             ->where('invoice_id', $order)
             ->get();
         $grandTotal = $orderList->sum('total');
-        $invoice = DB::table('view_invoice')
+        $invoice = DB::table('view_invoices')
             ->where('id', $order)
             ->first();
         $sold_by = Admin::find($invoice->sell_by);
@@ -213,7 +213,7 @@ class InformationController extends Controller
     }
     public function transactions(Request $request)
     {
-        $transactionList = DB::table('view_transaction')->get();
+        $transactionList = DB::table('view_transactions')->get();
 //        dd($transactionList);
         return view('information.transaction-list')
             ->with('transactionList', $transactionList);

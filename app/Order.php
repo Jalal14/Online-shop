@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $table = 'tbl_order';
+    protected $table = 'tbl_orders';
     public $timestamps = false;
 }

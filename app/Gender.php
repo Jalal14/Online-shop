@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gender extends Model
 {
-    protected $table = 'tbl_gender';
+    protected $table = 'tbl_genders';
     public $timestamps = false;
 }

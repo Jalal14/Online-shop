@@ -18,7 +18,7 @@ class HomeController extends Controller
         $topBrands = DB::table('view_popular_companies')
                     ->limit(5)
                     ->get();
-        $bestSales = DB::table('view_product')
+        $bestSales = DB::table('view_products')
                         ->where('status', '!=',5)
                         ->orderBy('sold', 'desc')
                         ->limit(5)
@@ -32,7 +32,7 @@ class HomeController extends Controller
                 $bestSale->details = str_limit($bestSale->details, 20, '...');
             }
         }
-        $newProducts = DB::table('view_product')
+        $newProducts = DB::table('view_products')
                         ->where('status', '!=',5)
                         ->orderBy('added', 'desc')
                         ->limit(5)
@@ -55,8 +55,8 @@ class HomeController extends Controller
     public function bestSale()
     {
         $title = "Best selling products";
-        $productList = DB::table('view_product')
-                        ->orderBy('sold', 'desc')
+        $productList = DB::table('view_products')
+                        ->orderBy('sold')
                         ->limit(15)
                         ->get();
         if ($productList->count() > 0){
@@ -75,7 +75,7 @@ class HomeController extends Controller
     public function newArrivals()
     {
         $title = "New arrivals";
-        $productList = DB::table('view_product')
+        $productList = DB::table('view_products')
             ->orderBy('added', 'desc')
             ->limit(15)
             ->get();
@@ -94,7 +94,7 @@ class HomeController extends Controller
     }
     public function prductDetails($id, Request $request)
     {
-        $product = DB::table('view_product')
+        $product = DB::table('view_products')
                         ->where('id', $id)
                         ->where('status', '!=', 5)
                         ->first();
@@ -122,7 +122,7 @@ class HomeController extends Controller
         $title = Company::where('id', $id)
                         ->pluck('name')
                         ->first();
-        $productList = DB::table('view_product')
+        $productList = DB::table('view_products')
                         ->where('company', $id)
                         ->get();
         if ($productList->count() > 0){
@@ -143,7 +143,7 @@ class HomeController extends Controller
         $title = Category::where('id', $id)
             ->pluck('name')
             ->first();
-        $productList = DB::table('view_product')
+        $productList = DB::table('view_products')
             ->where('category', $id)
             ->get();
         if ($productList->count() > 0){

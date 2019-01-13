@@ -25,7 +25,7 @@ class RegistrationReq extends FormRequest
     {
         return [
             'name'          =>  'required',
-            'regEmail'      =>  'bail | required | email | unique:tbl_user,email',
+            'regEmail'      =>  'bail | required | email | unique:tbl_users,email',
             'phone'         =>  'required',
             'address'       =>  'required',
             'regPassword'   =>  'required',

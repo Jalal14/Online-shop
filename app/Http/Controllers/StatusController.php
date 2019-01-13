@@ -22,7 +22,7 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'bail | required | unique:tbl_status,name',
+            'name' => 'bail | required | unique:tbl_statuses,name',
         ]);
         $status = new Status();
         $status->name = $request->name;
@@ -47,7 +47,7 @@ class StatusController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'bail | required | unique:tbl_status,name',
+            'name' => 'bail | required | unique:tbl_statuses,name',
         ]);
         $status = Status::find($request->id);
         $status->name = $request->name;

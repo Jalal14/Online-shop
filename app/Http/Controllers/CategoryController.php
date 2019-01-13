@@ -25,7 +25,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'bail | required | unique:tbl_category,name',
+            'name' => 'bail | required | unique:tbl_categories,name',
         ]);
         $category = new Category();
         $category->name = $request->name;
@@ -54,7 +54,7 @@ class CategoryController extends Controller
      public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'bail | required',
+            'name' => 'bail | required | unique:tbl_categories,name',
         ]);
         $category = Category::find($request->id);
         $category->name = $request->name;

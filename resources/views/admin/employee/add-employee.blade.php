@@ -34,15 +34,15 @@
                                         <thead>
                                         <tr>
                                             <td>User name: </td>
-                                            <td><input type="text" class="form-control" name="uname"></td>
+                                            <td><input type="text" class="form-control" name="uname" value="{{ old('uname') }}"></td>
                                         </tr>
                                         <tr>
                                             <td>Name: </td>
-                                            <td><input type="text" class="form-control" name="name"></td>
+                                            <td><input type="text" class="form-control" name="name" value="{{ old('name') }}"></td>
                                         </tr>
                                         <tr>
                                             <td>Email: </td>
-                                            <td><input type="email" class="form-control" name="email"></td>
+                                            <td><input type="email" class="form-control" name="email" value="{{ old('email') }}"></td>
                                         </tr>
                                         <tr>
                                             <td>Password: </td>
@@ -54,11 +54,11 @@
                                         </tr>
                                         <tr>
                                             <td>Phone 1: </td>
-                                            <td><input type="text" class="form-control" name="contact1"></td>
+                                            <td><input type="text" class="form-control" name="contact1" value="{{ old('contact1') }}"></td>
                                         </tr>
                                         <tr>
                                             <td>Phone 2: </td>
-                                            <td><input type="text" class="form-control" name="contact2"></td>
+                                            <td><input type="text" class="form-control" name="contact2" value="{{ old('contact2') }}"></td>
                                         </tr>
                                         <tr>
                                             <td>Gender: </td>
@@ -71,11 +71,11 @@
                                         </tr>
                                         <tr>
                                             <td>Date of birth: </td>
-                                            <td><input type="text" name="dob" id="dob"></td>
+                                            <td><input type="text" name="dob" id="dob" value="{{ old('dob') }}"></td>
                                         </tr>
                                         <tr>
                                             <td>Addreess: </td>
-                                            <td><input type="text" class="form-control" name="address"></td>
+                                            <td><input type="text" class="form-control" name="address" value="{{ old('address') }}"></td>
                                         </tr>
                                         <tr>
                                             <td>Status: </td>
@@ -96,8 +96,8 @@
                                             <td>Role: </td>
                                             <td>
                                                 <select class="form-control" name="role">
-                                                    <option value="Moderator">Moderator</option>
-                                                    <option value="Admin">Admin</option>
+                                                    <option value="1">Moderator</option>
+                                                    <option value="0">Admin</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -111,16 +111,16 @@
                                     <h3>Photo</h3>
                                 </div>
                                 <img class="img-thumbnail img-responsive" id="admin-photo">
+                                @if($errors->any())
+                                    @foreach($errors->all() as $error)
+                                        <p class="error">* {{$error}}</p>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            @if($errors->any())
-                @foreach($errors->all() as $error)
-                    <p class="error">* {{$error}}</p>
-                @endforeach
-            @endif
         </div>
     </div>
 @endsection

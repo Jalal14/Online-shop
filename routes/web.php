@@ -23,12 +23,6 @@ Route::get('/product/category/{id}', 'HomeController@productsByCategory')->name(
 
 Route::get('/product-details/{id}', 'HomeController@prductDetails')->name('home.productDetails');
 
-Route::get('/profile', 'UserController@editProfile')->name('user.editProfile');
-Route::post('/profile', 'UserController@updateProfile')->name('user.updateProfile');
-
-Route::get('/change-password', 'UserController@editPassword')->name('user.editPassword');
-Route::post('/change-password', 'UserController@updatePassword')->name('user.updatePassword');
-
 
 Route::post('/user-registration', 'UserAjaxController@store')->name('userAjax.registration');
 Route::get('/ajax/checkEmail', 'UserAjaxController@checkEmail')->name('userAjax.checkEmail');
@@ -53,6 +47,12 @@ Route::group(['middleware' => ['userSess']], function () {
     Route::post('/checkout', 'OrderController@order')->name('order.order');
 
     Route::get('/order/{invoice}', 'OrderController@userOrders')->name('order.userOrders');
+
+    Route::get('/profile', 'UserController@editProfile')->name('user.editProfile');
+    Route::post('/profile', 'UserController@updateProfile')->name('user.updateProfile');
+
+    Route::get('/change-password', 'UserController@editPassword')->name('user.editPassword');
+    Route::post('/change-password', 'UserController@updatePassword')->name('user.updatePassword');
 });
 
 Route::get('/logout', 'LogoutController@userLogout')->name('logout.userLogout');

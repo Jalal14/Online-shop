@@ -14,10 +14,10 @@ class LoginController extends Controller
     }
     public function adminLogin(Request $request)
     {
-        $admin = DB::table('view_admin')
+        $admin = DB::table('view_admins')
                     ->where('uname', $request->username)
                     ->first();
-//        $admin = DB::table('view_admin')
+//        $admin = DB::table('view_admins')
 //                    ->first();
 //        echo Crypt::decryptString($admin->password);
 //        die();

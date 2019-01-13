@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $table = 'tbl_transaction';
+    protected $table = 'tbl_transactions';
     public $timestamps = false;
 }
